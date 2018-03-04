@@ -45,4 +45,20 @@ public class Point {
     public LinkedList<Point> getClusterFriends() {
         return clusterFriends;
     }
+
+    public byte getValue() {
+        return value;
+    }
+
+    public Pair<Integer, Integer> getCoord() {
+        return coord;
+    }
+
+    public int getCoordX() {
+        return coord.getKey();
+    }
+
+    public int getCoordY() {
+        return coord.getValue();
+    }
 }
