@@ -7,6 +7,8 @@ import javax.annotation.Nullable;
 import java.util.LinkedList;
 
 public class Point {
+    public static byte WHITE_POINT = 0;
+    public static byte BLACK_POINT = 1;
     /**
      * характеризует тип ячейки
      * 0 - белая
