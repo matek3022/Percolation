@@ -11,8 +11,8 @@ public class Point {
     public static byte BLACK_POINT = 1;
     /**
      * характеризует тип ячейки
-     * 0 - белая
-     * 1 - черная
+     * 0 - белая - не дырка
+     * 1 - черная - дырка
      * вероятны другие значения в будущем...
      */
     private byte value;
