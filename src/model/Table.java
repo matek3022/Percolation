@@ -18,7 +18,7 @@ public class Table {
     /**
      * количство кластеров
      */
-    private int clasterCount = 0;
+    private int clusterCount = 0;
 
     /**
      * ширина губки
@@ -63,6 +63,10 @@ public class Table {
             }
             System.out.println();
         }
+    }
+
+    public int getClusterCount() {
+        return clusterCount;
     }
 
     private String getNormalizeClusterSize(int clusterSize) {
@@ -139,7 +143,7 @@ public class Table {
                      * процедуру кластеризации для этой точки
                      */
                     if (getPoint(x, y).getClusterSize() == 0) {
-                        clasterCount++;
+                        clusterCount++;
                         getPoint(x, y).addClusterFriend(currClusterProcess(null, x, y));
                         /**
                          * для ускорения работы нет смысла просчитывать один и тот же кластер
@@ -148,7 +152,7 @@ public class Table {
                          */
                         for (Point iterator : getPoint(x, y).getClusterFriends()) {
                             iterator.setClusterFriends(getPoint(x, y).getClusterFriends());
-                            iterator.setClusterNumber(clasterCount);
+                            iterator.setClusterNumber(clusterCount);
                         }
                     }
                 }
