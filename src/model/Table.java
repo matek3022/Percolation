@@ -126,23 +126,49 @@ public class Table {
         return new Point(Point.WHITE_POINT, x, y);
     }
 
+    /**
+     * просчет кластеров всей губки
+     */
     private void processClusters() {
         for (int y = 1; y < m + 1; y++) {
             for (int x = 1; x < n + 1; x++) {
                 if (getPoint(x, y).getValue() == Point.BLACK_POINT) {
                     iter = 0;
-                    getPoint(x, y).addClusterFriend(currClusterProcess(null, x, y));
+                    /**
+                     * если у точки ещё не вычислены соседи по кластеру, то запускаем
+                     * процедуру кластеризации для этой точки
+                     */
+                    if (getPoint(x, y).getClusterSize() == 0) {
+                        getPoint(x, y).addClusterFriend(currClusterProcess(null, x, y));
+                        /**
+                         * для ускорения работы нет смысла просчитывать один и тот же кластер
+                         * для всех точек в нем, поэтому присваиваем всем точкам в кластере
+                         * один и тот же список соседей
+                         */
+                        for (Point iterator : getPoint(x, y).getClusterFriends()) {
+                            iterator.setClusterFriends(getPoint(x, y).getClusterFriends());
+                        }
+                    }
                 }
             }
         }
     }
 
     private long iter = 0;
+
+    /**
+     * Рекурсивная функция просчета соседних точек в кластере по 4м направлениям
+     * условие добавления в checkList и результирующий список в том, чтобы
+     * проверямая точка была {@link Point#BLACK_POINT}
+     *
+     * @param checkList список точек, уже учтеных при просчете кластера
+     * @param x координата текущей точки по оси Х
+     * @param y координата текущей точки по оси У
+     * @return список всех элементов в кластере с точкой с координатами (Х, У)
+     */
     @Nonnull
     private LinkedList<Point> currClusterProcess(LinkedList<Point> checkList, int x, int y) {
-        /**
-         * идем от черной точки по 4м направлениям
-         */
+
         if (checkList == null) checkList = new LinkedList<>();
         LinkedList<Point> res = new LinkedList<>();
 
@@ -151,6 +177,11 @@ public class Table {
             checkList.add(getPoint(x, y));
         }
 
+        /**
+         * идем от черной точки по 4м направлениям от текущих координат и смотрим на точки
+         * затем добавляем их в результирующий список (res) и общий список проверки уникальности (checkList)
+         * для всех итераций рекурсии
+         */
         if (getPoint(x - 1, y).getValue() == Point.BLACK_POINT) {//влево
             if (isNewPointInCluster(checkList, getPoint(x - 1, y))) {
                 res.add(getPoint(x - 1, y));
@@ -175,12 +206,29 @@ public class Table {
                 checkList.add(getPoint(x, y + 1));
             }
         }
+        /**
+         * создаем список крайних точек (от текущей)
+         * чтобы запустить процедуру на них, за исключением
+         * текущей точки (т.к. мы уже её обработали)
+         */
         LinkedList<Point> currRes = new LinkedList<>();
         currRes.addAll(res);
         currRes.remove(getPoint(x, y));
+        /**
+         * просто вывод итераций, чтобы не думать что все повисло в случае
+         * длительных вычислений
+         */
         System.out.println("Iteration: " + String.valueOf(iter++));
         for (Point curr : currRes) {
+            /**
+             * запускаем алгоритм на все точки, прилегающие к текущей
+             */
             LinkedList<Point> newPoints = currClusterProcess(checkList, curr.getCoordX(), curr.getCoordY());
+
+            /**
+             * точка выхода из итеративного алгоритма, дописываем в результирующий список
+             * все точки, просчитанные в предыдущих итерациях
+             */
             for (Point newCurr : newPoints) {
                 if (isNewPointInCluster(res, newCurr)) {
                     res.add(newCurr);
@@ -190,6 +238,12 @@ public class Table {
         return res;
     }
 
+    /**
+     * процедура для проверки вхождения точки в список
+     * @param cluster список подлежащий проверке
+     * @param point точка, которую планируется внести в список
+     * @return true если точки нет в списке, если присутствует то false
+     */
     private boolean isNewPointInCluster(LinkedList<Point> cluster, Point point) {
         if (cluster == null) return true;
         for (Point curr : cluster) {

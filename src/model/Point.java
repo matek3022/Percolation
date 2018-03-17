@@ -31,7 +31,7 @@ public class Point {
     /**
      * номер кластера
      */
-    private int clasterNumber = -1;
+    private int clusterNumber = -1;
 
     public Point(byte value, @Nonnull Pair<Integer, Integer> coord) {
         this.value = value;
@@ -62,6 +62,10 @@ public class Point {
         this.clusterFriends.addAll(clusterFriends);
     }
 
+    public void setClusterFriends(LinkedList<Point> clusterFriends) {
+        this.clusterFriends = clusterFriends;
+    }
+
     public void setValue(byte value) {
         this.value = value;
     }
@@ -82,15 +86,15 @@ public class Point {
         return coord.getValue();
     }
 
-    public int getClasterNumber() {
-        return clasterNumber;
+    public int getClusterNumber() {
+        return clusterNumber;
     }
 
     public int getClusterSize() {
         return clusterFriends == null ? 0 : clusterFriends.size();
     }
 
-    public void setClasterNumber(int clasterNumber) {
-        this.clasterNumber = clasterNumber;
+    public void setClusterNumber(int clusterNumber) {
+        this.clusterNumber = clusterNumber;
     }
 }
