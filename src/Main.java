@@ -6,7 +6,7 @@ public class Main {
         Table table = new Table();
         table.printTable(false);
         System.out.println();
-//        table.printTable(true);
+        table.printTable(true);
         System.out.println("Cluster count: " + table.getClusterCount());
     }
 

@@ -38,6 +38,11 @@ public class Table {
      */
     private List<List<Point>> points;
 
+    /**
+     * массив кластеров таблицы
+     */
+    private LinkedList<Cluster> clusters;
+
     public Table() {
         n = DEFAULT_N;
         m = DEFAULT_M;
@@ -143,7 +148,6 @@ public class Table {
                      * процедуру кластеризации для этой точки
                      */
                     if (getPoint(x, y).getClusterSize() == 0) {
-                        clusterCount++;
                         getPoint(x, y).addClusterFriend(currClusterProcess(null, x, y));
                         /**
                          * для ускорения работы нет смысла просчитывать один и тот же кластер
@@ -154,9 +158,21 @@ public class Table {
                             iterator.setClusterFriends(getPoint(x, y).getClusterFriends());
                             iterator.setClusterNumber(clusterCount);
                         }
+                        clusterCount++;
+                        /**
+                         * запоминаем кластер
+                         */
+                        if (clusters == null) clusters = new LinkedList<>();
+                        clusters.add(new Cluster(this, getPoint(x, y).getClusterFriends()));
                     }
                 }
             }
+        }
+        /**
+         * поиск путей между всеми кластерами
+         */
+        for (Cluster cluster : clusters) {
+            cluster.addRoadsToClusters(clusters);
         }
     }
 
@@ -256,5 +272,17 @@ public class Table {
             if (curr == point) return false;
         }
         return true;
+    }
+
+    public int getN() {
+        return n;
+    }
+
+    public int getM() {
+        return m;
+    }
+
+    public double getP() {
+        return p;
     }
 }

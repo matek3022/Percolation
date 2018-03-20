@@ -3,64 +3,71 @@ package model;
 import java.util.LinkedList;
 
 /**
- * объект дорога, который характеризует связь между собой 2 точки таблицы
+ * объект дорога, который характеризует связь между собой 2 кластера таблицы
  */
 public class Road {
-    private Table table;
+    /**
+     * первый и второй кластеры
+     */
+    private Cluster first;
+    private Cluster second;
 
     /**
-     * начальная и конченая точки
+     * список точек пути
      */
-    private Point startPoint;
-    private Point endPoint;
-
-    /**
-     * список прошедших белых точек пути
-     */
-    private LinkedList<Point> listWhitePoints;
-
-    /**
-     * список прошедших красных точек пути
-     */
-    private LinkedList<Point> listRedPoints;
+    private LinkedList<Point> listPoints;
 
     private int roadLength;
 
-    public Road(Table table, Point startPoint, Point endPoint) {
-        this.table = table;
-        this.startPoint = startPoint;
-        this.endPoint = endPoint;
+    public Road(Cluster first, Cluster second) {
+        this.first = first;
+        this.second = second;
         processRoad();
     }
 
-    /**
-     * вычисляем длину пути
-     */
-    private void processRoad() {
-        int neededStepVertical = Math.abs(endPoint.getCoordY() - startPoint.getCoordY());
-        int neededStepHorizontal = Math.abs(endPoint.getCoordX() - startPoint.getCoordX());
-        roadLength = neededStepHorizontal + neededStepVertical - 1;
-        if (roadLength < 0) roadLength = 0;
-
-    }
-
-    public LinkedList<Point> getListWhitePoints() {
-        return listWhitePoints;
-    }
-
-    public LinkedList<Point> getListRedPoints() {
-        return listRedPoints;
+    public LinkedList<Point> getListPoints() {
+        return listPoints;
     }
 
     public int getRoadLength() {
         return roadLength;
     }
 
-    public Point getStartPoint() {
-        return startPoint;
+    public Cluster getFirst() {
+        return first;
     }
 
-    public Point getEndPoint() {
-        return endPoint;
+    public Cluster getSecond() {
+        return second;
+    }
+
+    /**
+     * вычисляем наименьшую длину пути между кластерами
+     */
+    private void processRoad() {
+        Point idealFirstPoint = first.getPoints().getFirst();
+        Point idealSecondPoint = second.getPoints().getFirst();
+        int currLength = Integer.MAX_VALUE;
+        for (Point firstIterator : first.getPoints()) {
+            for (Point secondIterator : second.getPoints()) {
+                int currIteratorLength = getLength(firstIterator, secondIterator);
+                if (currIteratorLength < currLength) {
+                    currLength = currIteratorLength;
+                    idealFirstPoint = firstIterator;
+                    idealSecondPoint = secondIterator;
+                }
+            }
+        }
+        roadLength = getLength(idealFirstPoint, idealSecondPoint);
+        // TODO: 20.03.2018 заполнить табличку путей из точек idealFirstPoint в idealSecondPoint
+    }
+
+    private int getLength(Point first, Point second) {
+        int res;
+        int neededStepVertical = Math.abs(second.getCoordY() - first.getCoordY());
+        int neededStepHorizontal = Math.abs(second.getCoordX() - first.getCoordX());
+        res = neededStepHorizontal + neededStepVertical - 1;
+        if (res < 0) res = 0;
+        return res;
     }
 }
