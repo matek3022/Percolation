@@ -1,7 +1,6 @@
 package model;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -43,12 +42,23 @@ public class Table {
      */
     private LinkedList<Cluster> clusters;
 
+    /**
+     * массив точек последней строки, не включенные в кластеры
+     */
+    private LinkedList<Point> nonClusterPoints;
+
+    /**
+     * белые кластеры из точек последней строки для алгоритма дейкстры
+     */
+    private LinkedList<Cluster> whiteClusters;
+
     public Table() {
         n = DEFAULT_N;
         m = DEFAULT_M;
         p = DEFAULT_P;
         generateTable();
         processClusters();
+        processRoad();
     }
 
     public Table(int n, int m, double p) {
@@ -57,6 +67,7 @@ public class Table {
         this.p = p;
         generateTable();
         processClusters();
+        processRoad();
     }
 
     public void printTable(boolean withClusterSize) {
@@ -84,8 +95,8 @@ public class Table {
     }
 
     private void generateTable() {
-        points = new ArrayList<>();
-        points.add(new ArrayList<>());
+        points = new LinkedList<>();
+        points.add(new LinkedList<>());
         /**
          * добавляем белую строку в начале
          */
@@ -96,7 +107,7 @@ public class Table {
          * бежим по строкам
          */
         for (int i = 1; i < m + 1; i++) {
-            points.add(new ArrayList<Point>());
+            points.add(new LinkedList<Point>());
             /**
              * добавляем белую точку в начале строки
              */
@@ -115,7 +126,7 @@ public class Table {
         /**
          * добавляем белую строку в конце
          */
-        points.add(new ArrayList<Point>());
+        points.add(new LinkedList<Point>());
         for (int i = 0; i < m + 2; i++) {
             points.get(points.size() - 1).add(getWhitePoint(i, points.size() - 1));
         }
@@ -133,6 +144,10 @@ public class Table {
 
     private Point getWhitePoint(int x, int y) {
         return new Point(Point.WHITE_POINT, x, y);
+    }
+
+    private void processRoad() {
+
     }
 
     /**
@@ -168,11 +183,41 @@ public class Table {
                 }
             }
         }
+
         /**
-         * поиск путей между всеми кластерами
+         * ищем все точки последней строки, которые не вошли в кластеры
+         */
+        nonClusterPoints = new LinkedList<>();
+        for (int i = 1; i < n + 1; i++) {
+            if (points.get(m).get(i).getValue() == Point.WHITE_POINT) {
+                nonClusterPoints.add(points.get(m).get(i));
+            }
+        }
+
+        /**
+         * создаем кластеры для белых точек, не вошедших в кластеры (т.к. они белые :))
+         */
+        whiteClusters = new LinkedList<>();
+        for (Point point : nonClusterPoints) {
+            LinkedList<Point> temp = new LinkedList<>();
+            temp.add(point);
+            whiteClusters.add(new Cluster(this, temp));
+        }
+
+        /**
+         * поиск путей между всеми черными кластерами кластерами, включая пути до белых кластеров
          */
         for (Cluster cluster : clusters) {
             cluster.addRoadsToClusters(clusters);
+            cluster.addRoadsToClusters(whiteClusters);
+        }
+
+        /**
+         * поиск путей между всеми белыми кластерами кластерами, включая пути до черных кластеров
+         */
+        for (Cluster cluster : whiteClusters) {
+            cluster.addRoadsToClusters(clusters);
+            cluster.addRoadsToClusters(whiteClusters);
         }
     }
 
