@@ -157,7 +157,7 @@ public class Table {
         for (int y = 1; y < m + 1; y++) {
             for (int x = 1; x < n + 1; x++) {
                 if (getPoint(x, y).getValue() == Point.BLACK_POINT) {
-                    iter = 0;
+//                    iter = 0;
                     /**
                      * если у точки ещё не вычислены соседи по кластеру, то запускаем
                      * процедуру кластеризации для этой точки
@@ -199,9 +199,7 @@ public class Table {
          */
         whiteClusters = new LinkedList<>();
         for (Point point : nonClusterPoints) {
-            LinkedList<Point> temp = new LinkedList<>();
-            temp.add(point);
-            whiteClusters.add(new Cluster(this, temp));
+            whiteClusters.add(new Cluster(this, point));
         }
 
         /**
@@ -221,7 +219,7 @@ public class Table {
         }
     }
 
-    private long iter = 0;
+//    private long iter = 0;
 
     /**
      * Рекурсивная функция просчета соседних точек в кластере по 4м направлениям
@@ -281,11 +279,11 @@ public class Table {
         LinkedList<Point> currRes = new LinkedList<>();
         currRes.addAll(res);
         currRes.remove(getPoint(x, y));
-        /**
-         * просто вывод итераций, чтобы не думать что все повисло в случае
-         * длительных вычислений
-         */
-        System.out.println("Iteration: " + String.valueOf(iter++));
+//        /**
+//         * просто вывод итераций, чтобы не думать что все повисло в случае
+//         * длительных вычислений
+//         */
+//        System.out.println("Iteration: " + String.valueOf(iter++));
         for (Point curr : currRes) {
             /**
              * запускаем алгоритм на все точки, прилегающие к текущей

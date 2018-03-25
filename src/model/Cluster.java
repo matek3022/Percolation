@@ -30,6 +30,12 @@ public class Cluster {
         processTopAndBottom(table);
     }
 
+    public Cluster(Table table, Point point) {
+        this.points = new LinkedList<>();
+        points.add(point);
+        processTopAndBottom(table);
+    }
+
     private void processTopAndBottom(Table table) {
         for (Point iterator : points) {
             if (iterator.getCoordY() == 1) {
