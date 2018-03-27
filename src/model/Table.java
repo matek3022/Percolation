@@ -7,8 +7,8 @@ import java.util.Random;
 
 public class Table {
     public static final double DEFAULT_P = 0.4d;
-    public static final int DEFAULT_N = 60;
-    public static final int DEFAULT_M = 60;
+    public static final int DEFAULT_N = 75;
+    public static final int DEFAULT_M = 75;
     private static final String ANSI_RESET = "\033[0m";
     private static final String ANSI_BLACK = "\033[47m";
     private static final String ANSI_WHITE = "\033[40m";
@@ -52,22 +52,27 @@ public class Table {
      */
     private LinkedList<Cluster> whiteClusters;
 
+    /**
+     * кратчайший путь
+     */
+    private int minLength = Integer.MAX_VALUE;
+
     public Table() {
         n = DEFAULT_N;
         m = DEFAULT_M;
         p = DEFAULT_P;
         generateTable();
         processClusters();
-        processRoad();
+        processRoads();
     }
 
-    public Table(int n, int m, double p) {
+    public Table(int m, int n, double p) {
         this.n = n;
         this.m = m;
         this.p = p;
         generateTable();
         processClusters();
-        processRoad();
+        processRoads();
     }
 
     public void printTable(boolean withClusterSize) {
@@ -146,8 +151,97 @@ public class Table {
         return new Point(Point.WHITE_POINT, x, y);
     }
 
-    private void processRoad() {
+    private void processRoads() {
+        for (int i = 1; i < n + 1; i++) {
+            Point currPoint = getPoint(i, 1);
+            int temp = processStartRoadFromPoint(currPoint.getCoordX(), currPoint.getCoordY());
+            if (temp < minLength) {
+                minLength = temp;
+            }
+        }
+    }
 
+    private int processStartRoadFromPoint(int x, int y) {
+        boolean startPointIsBlack = false;
+        boolean endPointIsBlack = false;
+        LinkedList<Cluster> temp = new LinkedList<>();
+        temp.addAll(clusters);
+        temp.addAll(whiteClusters);
+        /**
+         * устанавливаем длины путей до кластеров в бесконечность
+         */
+        for (Cluster cluster : temp) {
+            cluster.setCurrMinLength(Integer.MAX_VALUE);
+        }
+        Point startPoint = getPoint(x, y);
+        Cluster startCluster = new Cluster(this, startPoint);
+        if (startPoint.getValue() == Point.BLACK_POINT) {
+            for (Cluster cluster : clusters) {
+                for (Point point : cluster.getPoints()) {
+                    if (point == startPoint) {
+                        startCluster = cluster;
+                        startPointIsBlack = true;
+                        break;
+                    }
+                }
+            }
+        }
+        /**
+         * стартовый кластер и будет конечным, т.к. внутри себя имеет кратчайший путь сверху донизу
+         */
+        if (startCluster.isTopAndBottomCluster()) {
+            return 0;
+        }
+        startCluster.addRoadsToClusters(temp);
+        startCluster.setCurrMinLength(0);
+        /**
+         * инициализируем начальные пути из стартовой точки до всех кластеров
+         */
+        for (Road road : startCluster.getRoads()) {
+            road.getSecond().setCurrMinLength(road.getRoadLength());
+        }
+        /**
+         * бежим по точкам
+         */
+        for (Road road : startCluster.getRoads()) {
+            processRoads(road.getSecond());
+        }
+        int res = Integer.MAX_VALUE;
+        Cluster clusterRes = null;
+        for (Cluster cluster : temp) {
+            if (cluster.isBottomCluster() && res > cluster.getCurrMinLength()) {
+                res = cluster.getCurrMinLength();
+                clusterRes = cluster;
+            }
+        }
+        for (Cluster cluster : clusters) {
+            if (cluster == clusterRes) {
+                endPointIsBlack = true;
+                break;
+            }
+        }
+        if (!startPointIsBlack) res++;
+        if (!endPointIsBlack) res++;
+        return res;
+    }
+
+    private void processRoads(Cluster cluster) {
+        if (cluster.isBottomCluster()) return;
+        /**
+         * проверяем и переписываем новую длину пути
+         */
+        for (Road road : cluster.getRoads()) {
+            if (road.getSecond().getCurrMinLength() > cluster.getCurrMinLength() + road.getRoadLength()) {
+                road.getSecond().setCurrMinLength(cluster.getCurrMinLength() + road.getRoadLength());
+                processRoads(road.getSecond());
+            }
+        }
+        /**
+         * заползаем внутрь
+         */
+//        for (Road road : cluster.getRoads()) {
+//
+//        }
     }
 
     /**
@@ -327,5 +421,9 @@ public class Table {
 
     public double getP() {
         return p;
+    }
+
+    public int getMinLength() {
+        return minLength;
     }
 }

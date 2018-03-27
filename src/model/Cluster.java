@@ -25,6 +25,8 @@ public class Cluster {
      */
     private boolean isTopAndBottomCluster = false;
 
+    private int currMinLength = Integer.MAX_VALUE;
+
     public Cluster(Table table, LinkedList<Point> points) {
         this.points = points;
         processTopAndBottom(table);
@@ -91,5 +93,13 @@ public class Cluster {
 
     public boolean isTopAndBottomCluster() {
         return isTopAndBottomCluster;
+    }
+
+    public int getCurrMinLength() {
+        return currMinLength;
+    }
+
+    public void setCurrMinLength(int currMinLength) {
+        this.currMinLength = currMinLength;
     }
 }
