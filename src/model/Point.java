@@ -7,12 +7,14 @@ import javax.annotation.Nullable;
 import java.util.LinkedList;
 
 public class Point {
-    public static byte RED_POINT = 2;
-    public static byte WHITE_POINT = 1;
-    public static byte BLACK_POINT = 0;
+    public static final byte GREEN_POINT = 3;
+    public static final byte RED_POINT = 2;
+    public static final byte WHITE_POINT = 1;
+    public static final byte BLACK_POINT = 0;
     /**
      * характеризует тип ячейки
-     * 2 - крассная точка
+     * 3 - зеленая точка (пройденный путь по кластеру)
+     * 2 - крассная точка (добавленный путь)
      * 1 - белая - не дырка
      * 0 - черная - дырка
      * вероятны другие значения в будущем...

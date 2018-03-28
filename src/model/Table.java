@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import static model.Point.*;
+
 public class Table {
     public static final double DEFAULT_P = 0.4d;
     public static final int DEFAULT_N = 75;
@@ -13,6 +15,7 @@ public class Table {
     private static final String ANSI_BLACK = "\033[47m";
     private static final String ANSI_WHITE = "\033[40m";
     private static final String ANSI_RED = "\033[41m";
+    private static final String ANSI_GREEN = "\033[42m";
     private static final String TEXTURE = "  " + ANSI_RESET;
     /**
      * количство кластеров
@@ -55,32 +58,51 @@ public class Table {
     /**
      * кратчайший путь
      */
-    private int minLength = Integer.MAX_VALUE;
+    private TableRoad minTableRoad = new TableRoad(null, Integer.MAX_VALUE);
 
     public Table() {
         n = DEFAULT_N;
         m = DEFAULT_M;
         p = DEFAULT_P;
-        generateTable();
-        processClusters();
-        processRoads();
+        init();
     }
 
     public Table(int m, int n, double p) {
         this.n = n;
         this.m = m;
         this.p = p;
+        init();
+    }
+
+    private void init() {
+        clusters = new LinkedList<>();
+        nonClusterPoints = new LinkedList<>();
+        whiteClusters = new LinkedList<>();
         generateTable();
         processClusters();
         processRoads();
+        minTableRoad.setRedColor();
     }
 
     public void printTable(boolean withClusterSize) {
         for (List<Point> row : points) {
             for (Point point : row) {
-                System.out.print(point.getValue() == Point.BLACK_POINT
-                        ? ANSI_BLACK + (withClusterSize ? getNormalizeClusterSize(point.getClusterSize()) : TEXTURE)
-                        : point.getValue() == Point.WHITE_POINT ? ANSI_WHITE + TEXTURE : ANSI_RED + TEXTURE);
+                String text = "";
+                switch (point.getValue()) {
+                    case WHITE_POINT:
+                        text = ANSI_WHITE + TEXTURE;
+                        break;
+                    case BLACK_POINT:
+                        text = ANSI_BLACK + (withClusterSize ? getNormalizeClusterSize(point.getClusterSize()) : TEXTURE);
+                        break;
+                    case RED_POINT:
+                        text = ANSI_RED + TEXTURE;
+                        break;
+                    case GREEN_POINT:
+                        text = ANSI_GREEN + (withClusterSize ? getNormalizeClusterSize(point.getClusterSize()) : TEXTURE);
+                        break;
+                }
+                System.out.print(text);
             }
             System.out.println();
         }
@@ -139,7 +161,7 @@ public class Table {
 
     private Point getPointForGenerateTable(int x, int y) {
         return new Point((new Random().nextInt(1000) <= p * 1000)
-                ? Point.BLACK_POINT : Point.WHITE_POINT,
+                ? Point.BLACK_POINT : WHITE_POINT,
                 x, y);
     }
 
@@ -148,20 +170,34 @@ public class Table {
     }
 
     private Point getWhitePoint(int x, int y) {
-        return new Point(Point.WHITE_POINT, x, y);
+        return new Point(WHITE_POINT, x, y);
     }
 
     private void processRoads() {
+        Point currStartPoint = getPoint(0, 0);
         for (int i = 1; i < n + 1; i++) {
             Point currPoint = getPoint(i, 1);
-            int temp = processStartRoadFromPoint(currPoint.getCoordX(), currPoint.getCoordY());
-            if (temp < minLength) {
-                minLength = temp;
+            TableRoad temp = processStartRoadFromPoint(currPoint.getCoordX(), currPoint.getCoordY());
+            if (temp.getRoadLength() < minTableRoad.getRoadLength()) {
+                minTableRoad = temp;
+                currStartPoint = currPoint;
+            }
+        }
+        if (currStartPoint.getValue() == WHITE_POINT) {
+            minTableRoad.setStartCluster(new Cluster(this, currStartPoint));
+        } else {
+            for (Cluster cluster : clusters) {
+                for (Point point : cluster.getPoints()) {
+                    if (point == currStartPoint) {
+                        minTableRoad.setStartCluster(cluster);
+                        return;
+                    }
+                }
             }
         }
     }
 
-    private int processStartRoadFromPoint(int x, int y) {
+    private TableRoad processStartRoadFromPoint(int x, int y) {
         boolean startPointIsBlack = false;
         boolean endPointIsBlack = false;
         LinkedList<Cluster> temp = new LinkedList<>();
@@ -190,7 +226,7 @@ public class Table {
          * стартовый кластер и будет конечным, т.к. внутри себя имеет кратчайший путь сверху донизу
          */
         if (startCluster.isTopAndBottomCluster()) {
-            return 0;
+            return new TableRoad(startCluster, 0);
         }
         startCluster.addRoadsToClusters(temp);
         startCluster.setCurrMinLength(0);
@@ -222,7 +258,7 @@ public class Table {
         }
         if (!startPointIsBlack) res++;
         if (!endPointIsBlack) res++;
-        return res;
+        return new TableRoad(clusterRes, res);
     }
 
     private void processRoads(Cluster cluster) {
@@ -283,7 +319,7 @@ public class Table {
          */
         nonClusterPoints = new LinkedList<>();
         for (int i = 1; i < n + 1; i++) {
-            if (points.get(m).get(i).getValue() == Point.WHITE_POINT) {
+            if (points.get(m).get(i).getValue() == WHITE_POINT) {
                 nonClusterPoints.add(points.get(m).get(i));
             }
         }
@@ -424,6 +460,6 @@ public class Table {
     }
 
     public int getMinLength() {
-        return minLength;
+        return minTableRoad.getRoadLength();
     }
 }
