@@ -38,7 +38,7 @@ public class Table {
     /**
      * матрица точек
      */
-    private List<List<Point>> points;
+    private LinkedList<LinkedList<Point>> points;
 
     /**
      * массив кластеров таблицы
@@ -64,21 +64,29 @@ public class Table {
         n = DEFAULT_N;
         m = DEFAULT_M;
         p = DEFAULT_P;
-        init();
+        init(true);
     }
 
     public Table(int m, int n, double p) {
         this.n = n;
         this.m = m;
         this.p = p;
-        init();
+        init(true);
     }
 
-    private void init() {
+    public Table (LinkedList<LinkedList<Point>> points) {
+        p = 0;
+        m = points.size() - 2;
+        n = points.get(0).size() - 2;
+        this.points = points;
+        init(false);
+    }
+
+    private void init(boolean generate) {
         clusters = new LinkedList<>();
         nonClusterPoints = new LinkedList<>();
         whiteClusters = new LinkedList<>();
-        generateTable();
+        if (generate) generateTable();
         processClusters();
         processRoads();
         minTableRoad.setRedColor(this);
@@ -166,11 +174,11 @@ public class Table {
                 x, y);
     }
 
-    private Point getBlackPoint(int x, int y) {
+    public static Point getBlackPoint(int x, int y) {
         return new Point(Point.BLACK_POINT, x, y);
     }
 
-    private Point getWhitePoint(int x, int y) {
+    public static Point getWhitePoint(int x, int y) {
         return new Point(WHITE_POINT, x, y);
     }
 
