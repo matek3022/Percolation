@@ -1,8 +1,11 @@
 package model;
 
+import java.util.LinkedList;
+
 public class TableRoad {
     private Cluster startCluster;
     private Cluster endCluster;
+    private LinkedList<Road> roads;
     private int roadLength;
 
     public TableRoad(Cluster endCluster, int roadLength) {
@@ -10,25 +13,64 @@ public class TableRoad {
         this.roadLength = roadLength;
     }
 
-    public Cluster getEndCluster() {
-        return endCluster;
-    }
-
-    public int getRoadLength() {
-        return roadLength;
-    }
-
     public void setStartCluster(Cluster cluster) {
         startCluster = cluster;
     }
 
     public void setRedColor() {
-        for (Point point : startCluster.getPoints()) {
-            processColor(point);
+        if (roads != null) {
+            /**
+             * окрашивание всех кластеров, кроме последнего
+             */
+            for (Road road : roads) {
+                for (Point point : road.getFirst().getPoints()) {
+                    processColor(point);
+                }
+            }
+            /**
+             * для окрашивания конечного кластера
+             */
+            for (Point point : roads.getFirst().getSecond().getPoints()) {
+                processColor(point);
+            }
+        } else {
+            /**
+             * сюда проваливаемся в случае, когда кластер полностью идет сверху вниз (один)
+             */
+            if (endCluster != null)
+            for (Point point : endCluster.getPoints()) {
+                processColor(point);
+            }
+            if (startCluster != null)
+                for (Point point : startCluster.getPoints()) {
+                    processColor(point);
+                }
         }
-        for (Point point : endCluster.getPoints()) {
-            processColor(point);
+    }
+
+    public void processRoads() {
+        roads = new LinkedList<>();
+        Cluster iterationCluster = endCluster;
+        while (iterationCluster != startCluster) {
+            roads.add(new Road(iterationCluster.getCurrPrevCluster(), iterationCluster));
+            iterationCluster = iterationCluster.getCurrPrevCluster();
         }
+    }
+
+    public LinkedList<Road> getRoads() {
+        return roads;
+    }
+
+    public Cluster getEndCluster() {
+        return endCluster;
+    }
+
+    public Cluster getStartCluster() {
+        return startCluster;
+    }
+
+    public int getRoadLength() {
+        return roadLength;
     }
 
     private void processColor(Point point) {

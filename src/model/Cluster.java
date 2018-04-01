@@ -27,6 +27,8 @@ public class Cluster {
 
     private int currMinLength = Integer.MAX_VALUE;
 
+    private Cluster currPrevCluster = this;
+
     public Cluster(Table table, LinkedList<Point> points) {
         this.points = points;
         processTopAndBottom(table);
@@ -101,5 +103,13 @@ public class Cluster {
 
     public void setCurrMinLength(int currMinLength) {
         this.currMinLength = currMinLength;
+    }
+
+    public Cluster getCurrPrevCluster() {
+        return currPrevCluster;
+    }
+
+    public void setCurrPrevCluster(Cluster currPrevCluster) {
+        this.currPrevCluster = currPrevCluster;
     }
 }

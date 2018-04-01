@@ -4,12 +4,12 @@ import model.Table;
 public class Main {
 
     public static void main(String[] argv) {
-//        startNewThread(75, 75, 0.1d);
+        startNewThread(75, 75, 0.1d);
 //        startNewThread(75, 75, 0.2d);
 //        startNewThread(75, 75, 0.3d);
 //        startNewThread(75, 75, 0.4d);
 //        startNewThread(75, 75, 0.5d);
-        startNewThread(75, 75, 0.6d);
+//        startNewThread(75, 75, 0.6d);
 //        startNewThread(75, 75, 0.7d);
 //        startNewThread(75, 75, 0.8d);
 //        startNewThread(75, 75, 0.9d);

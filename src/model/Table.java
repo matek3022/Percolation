@@ -174,25 +174,11 @@ public class Table {
     }
 
     private void processRoads() {
-        Point currStartPoint = getPoint(0, 0);
         for (int i = 1; i < n + 1; i++) {
             Point currPoint = getPoint(i, 1);
             TableRoad temp = processStartRoadFromPoint(currPoint.getCoordX(), currPoint.getCoordY());
             if (temp.getRoadLength() < minTableRoad.getRoadLength()) {
                 minTableRoad = temp;
-                currStartPoint = currPoint;
-            }
-        }
-        if (currStartPoint.getValue() == WHITE_POINT) {
-            minTableRoad.setStartCluster(new Cluster(this, currStartPoint));
-        } else {
-            for (Cluster cluster : clusters) {
-                for (Point point : cluster.getPoints()) {
-                    if (point == currStartPoint) {
-                        minTableRoad.setStartCluster(cluster);
-                        return;
-                    }
-                }
             }
         }
     }
@@ -235,6 +221,7 @@ public class Table {
          */
         for (Road road : startCluster.getRoads()) {
             road.getSecond().setCurrMinLength(road.getRoadLength());
+            road.getSecond().setCurrPrevCluster(startCluster);
         }
         /**
          * бежим по точкам
@@ -258,7 +245,10 @@ public class Table {
         }
         if (!startPointIsBlack) res++;
         if (!endPointIsBlack) res++;
-        return new TableRoad(clusterRes, res);
+        TableRoad resTableRoad = new TableRoad(clusterRes, res);
+        resTableRoad.setStartCluster(startCluster);
+        resTableRoad.processRoads();
+        return resTableRoad;
     }
 
     private void processRoads(Cluster cluster) {
@@ -269,15 +259,10 @@ public class Table {
         for (Road road : cluster.getRoads()) {
             if (road.getSecond().getCurrMinLength() > cluster.getCurrMinLength() + road.getRoadLength()) {
                 road.getSecond().setCurrMinLength(cluster.getCurrMinLength() + road.getRoadLength());
+                road.getSecond().setCurrPrevCluster(cluster);
                 processRoads(road.getSecond());
             }
         }
-        /**
-         * заползаем внутрь
-         */
-//        for (Road road : cluster.getRoads()) {
-//
-//        }
     }
 
     /**
@@ -287,7 +272,6 @@ public class Table {
         for (int y = 1; y < m + 1; y++) {
             for (int x = 1; x < n + 1; x++) {
                 if (getPoint(x, y).getValue() == Point.BLACK_POINT) {
-//                    iter = 0;
                     /**
                      * если у точки ещё не вычислены соседи по кластеру, то запускаем
                      * процедуру кластеризации для этой точки
@@ -349,8 +333,6 @@ public class Table {
         }
     }
 
-//    private long iter = 0;
-
     /**
      * Рекурсивная функция просчета соседних точек в кластере по 4м направлениям
      * условие добавления в checkList и результирующий список в том, чтобы
@@ -409,11 +391,6 @@ public class Table {
         LinkedList<Point> currRes = new LinkedList<>();
         currRes.addAll(res);
         currRes.remove(getPoint(x, y));
-//        /**
-//         * просто вывод итераций, чтобы не думать что все повисло в случае
-//         * длительных вычислений
-//         */
-//        System.out.println("Iteration: " + String.valueOf(iter++));
         for (Point curr : currRes) {
             /**
              * запускаем алгоритм на все точки, прилегающие к текущей
