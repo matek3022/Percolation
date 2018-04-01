@@ -82,6 +82,7 @@ public class Table {
         processClusters();
         processRoads();
         minTableRoad.setRedColor(this);
+        minTableRoad.processRoadWidth();
     }
 
     public void printTable(boolean withClusterSize) {
@@ -438,5 +439,12 @@ public class Table {
 
     public int getMinLength() {
         return minTableRoad.getRoadLength();
+    }
+
+    /**
+     * @return ширину пути
+     */
+    public int getRoadWidth() {
+        return minTableRoad.getRoadWidth();
     }
 }

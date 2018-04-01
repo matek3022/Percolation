@@ -36,6 +36,7 @@ public class Main {
                 System.out.println();
                 System.out.println("Cluster count: " + table.getClusterCount());
                 System.out.println("Table minLength: " + table.getMinLength());
+                System.out.println("Table road width: " + table.getRoadWidth());
                 System.out.println("Time: " + (System.currentTimeMillis() / 1000L - time));
                 System.out.println(String.format("Params: m = %s, n = %s, p = %s", m, n, p));
                 table.printTable(false);

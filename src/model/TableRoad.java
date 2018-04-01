@@ -6,7 +6,14 @@ public class TableRoad {
     private Cluster startCluster;
     private Cluster endCluster;
     private LinkedList<Road> roads;
+    /**
+     * длина пути
+     */
     private int roadLength;
+    /**
+     * ширина пути
+     */
+    private int roadWidth;
 
     public TableRoad(Cluster endCluster, int roadLength) {
         this.endCluster = endCluster;
@@ -69,6 +76,39 @@ public class TableRoad {
         }
     }
 
+    public void processRoadWidth() {
+        int left = Integer.MAX_VALUE;
+        int right = 0;
+        if (roads != null) {
+            for (Road road : roads) {
+                for (Point point : road.getFirst().getPoints()) {
+                    if (point.getCoordX() < left) left = point.getCoordX();
+                    if (point.getCoordX() > right) right = point.getCoordX();
+                }
+                for (Point point : road.getSecond().getPoints()) {
+                    if (point.getCoordX() < left) left = point.getCoordX();
+                    if (point.getCoordX() > right) right = point.getCoordX();
+                }
+                for (Point point : road.getListPoints()) {
+                    if (point.getCoordX() < left) left = point.getCoordX();
+                    if (point.getCoordX() > right) right = point.getCoordX();
+                }
+            }
+        } else {
+            if (endCluster != null)
+                for (Point point : endCluster.getPoints()) {
+                    if (point.getCoordX() < left) left = point.getCoordX();
+                    if (point.getCoordX() > right) right = point.getCoordX();
+                }
+            if (startCluster != null)
+                for (Point point : startCluster.getPoints()) {
+                    if (point.getCoordX() < left) left = point.getCoordX();
+                    if (point.getCoordX() > right) right = point.getCoordX();
+                }
+        }
+        roadWidth = right - left + 1;
+    }
+
     public LinkedList<Road> getRoads() {
         return roads;
     }
@@ -83,6 +123,10 @@ public class TableRoad {
 
     public int getRoadLength() {
         return roadLength;
+    }
+
+    public int getRoadWidth() {
+        return roadWidth;
     }
 
     private void processColor(Point point) {
