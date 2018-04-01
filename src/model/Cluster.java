@@ -25,8 +25,14 @@ public class Cluster {
      */
     private boolean isTopAndBottomCluster = false;
 
+    /**
+     * для итераций алгоритма дейкстры
+     */
     private int currMinLength = Integer.MAX_VALUE;
 
+    /**
+     * для итераций алгоритма дейкстры
+     */
     private Cluster currPrevCluster = this;
 
     public Cluster(Table table, LinkedList<Point> points) {

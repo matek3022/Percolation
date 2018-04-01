@@ -81,7 +81,7 @@ public class Table {
         generateTable();
         processClusters();
         processRoads();
-        minTableRoad.setRedColor();
+        minTableRoad.setRedColor(this);
     }
 
     public void printTable(boolean withClusterSize) {

@@ -12,11 +12,17 @@ public class Road {
     private Cluster first;
     private Cluster second;
 
+    private Point idealFirstPoint;
+    private Point idealSecondPoint;
+
     /**
      * список точек пути
      */
     private LinkedList<Point> listPoints;
 
+    /**
+     * кратчайшая длина пути между кластерами (напрямик)
+     */
     private int roadLength;
 
     public Road(Cluster first, Cluster second) {
@@ -42,11 +48,36 @@ public class Road {
     }
 
     /**
+     * построение маршрута между точками кластера
+     */
+    public void processRoadPoints(Table table) {
+        int x = idealFirstPoint.getCoordX() - idealSecondPoint.getCoordX();
+        int y = idealFirstPoint.getCoordY() - idealSecondPoint.getCoordY();
+        listPoints = new LinkedList<>();
+        for (int i = 0; i != x; ) {
+            if (x > 0) {
+                i++;
+            } else {
+                i--;
+            }
+            listPoints.add(table.getPoint(idealFirstPoint.getCoordX() - i, idealFirstPoint.getCoordY()));
+        }
+        for (int i = 0; i != y; ) {
+            if (y > 0) {
+                i++;
+            } else {
+                i--;
+            }
+            listPoints.add(table.getPoint(idealSecondPoint.getCoordX(), idealSecondPoint.getCoordY() + i));
+        }
+    }
+
+    /**
      * вычисляем наименьшую длину пути между кластерами
      */
     private void processRoad() {
-        Point idealFirstPoint = first.getPoints().getFirst();
-        Point idealSecondPoint = second.getPoints().getFirst();
+        idealFirstPoint = first.getPoints().getFirst();
+        idealSecondPoint = second.getPoints().getFirst();
         int currLength = Integer.MAX_VALUE;
         for (Point firstIterator : first.getPoints()) {
             for (Point secondIterator : second.getPoints()) {

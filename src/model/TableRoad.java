@@ -17,14 +17,20 @@ public class TableRoad {
         startCluster = cluster;
     }
 
-    public void setRedColor() {
+    public void setRedColor(Table table) {
         if (roads != null) {
             /**
              * окрашивание всех кластеров, кроме последнего
              */
             for (Road road : roads) {
+                road.processRoadPoints(table);
                 for (Point point : road.getFirst().getPoints()) {
                     processColor(point);
+                }
+                if (road.getListPoints() != null) {
+                    for (Point point : road.getListPoints()) {
+                        processColor(point);
+                    }
                 }
             }
             /**
@@ -32,6 +38,12 @@ public class TableRoad {
              */
             for (Point point : roads.getFirst().getSecond().getPoints()) {
                 processColor(point);
+                roads.getFirst().processRoadPoints(table);
+                if (roads.getFirst().getListPoints() != null) {
+                    for (Point roadPoint : roads.getFirst().getListPoints()) {
+                        processColor(roadPoint);
+                    }
+                }
             }
         } else {
             /**
