@@ -39,6 +39,11 @@ public class Main {
 //        startNewThread(Tests.getGradMatrix50x50(false));
 //        startNewThread(Tests.getRainMatrix50x50());
 //        new MainForm();
+        processIterations();
+    }
+
+    public static void processIterations() {
+        currIter = 0;
         while (currIter != MAX_ITERATION) {
             if (currThreads < MAX_THREADS) {
                 currIter++;
