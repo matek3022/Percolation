@@ -39,7 +39,12 @@ public class Main {
 //        startNewThread(Tests.getGradMatrix50x50(false));
 //        startNewThread(Tests.getRainMatrix50x50());
 //        new MainForm();
-        processIterations();
+//        processIterations();
+//        startNewThread(Tests.getSquareMatrix50x50());
+//        startNewThread(Tests.getXBlackMatrix50x50());
+//        startNewThread(Tests.getXWhiteMatrix50x50());
+//        startNewThread(Tests.getXSmallWhiteMatrix50x50());
+
     }
 
     public static void processIterations() {
