@@ -6,8 +6,6 @@ import java.util.LinkedList;
 
 
 public class Main {
-    public static final int MAX_THREADS = 4;
-    public static final int MAX_ITERATION = 20;
 
     public static int currThreads = 0;
     public static int currIter = 0;
@@ -44,10 +42,10 @@ public class Main {
 
     public static void processIterations() {
         currIter = 0;
-        while (currIter != MAX_ITERATION) {
-            if (currThreads < MAX_THREADS) {
+        while (currIter != Setup.MAX_ITERATION) {
+            if (currThreads < Setup.MAX_THREADS) {
                 currIter++;
-                startNewThread(50, 50, 0.4d, currIter);
+                startNewThread(Setup.M, Setup.N, Setup.P, currIter);
             } else {
                 try {
                     Thread.sleep(500L);
@@ -62,9 +60,9 @@ public class Main {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                long time = System.currentTimeMillis() / 1000L;
+                long time = System.currentTimeMillis();
                 Table table = new Table(m, n, p);
-                time = System.currentTimeMillis() / 1000L - time;
+                time = System.currentTimeMillis() - time;
                 System.out.println();
                 System.out.println("Cluster count: " + table.getClusterCount());
                 System.out.println("Table minLength: " + table.getMinLength());
@@ -77,15 +75,16 @@ public class Main {
     }
 
     public static void startNewThread(int m, int n, double p, int currIter) {
+        String fileName = "m-" + m + "n-" + n + "p-" + p + ".xls";
         new Thread(new Runnable() {
             @Override
             public void run() {
                 currThreads++;
-                long time = System.currentTimeMillis() / 1000L;
+                long time = System.currentTimeMillis();
                 Table table = new Table(m, n, p);
-                time = System.currentTimeMillis() / 1000L - time;
+                time = System.currentTimeMillis() - time;
                 System.out.println("Текущая выполненная операция = " + currIter);
-                ExcelUtils.writeTableToFile("test.xls", table, currIter, time);
+                ExcelUtils.writeTableToFile(fileName, table, currIter, time);
                 currThreads--;
             }
         }).start();
@@ -95,13 +94,13 @@ public class Main {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                long time = System.currentTimeMillis() / 1000L;
+                long time = System.currentTimeMillis();
                 Table table = new Table(points);
                 System.out.println();
                 System.out.println("Cluster count: " + table.getClusterCount());
                 System.out.println("Table minLength: " + table.getMinLength());
                 System.out.println("Table road width: " + table.getRoadWidth());
-                System.out.println("Time: " + (System.currentTimeMillis() / 1000L - time));
+                System.out.println("Time: " + (System.currentTimeMillis() - time));
                 System.out.println(String.format("Params: m = %s, n = %s, p = %s", table.getM(), table.getN(), table.getP()));
                 table.printTable(false);
             }

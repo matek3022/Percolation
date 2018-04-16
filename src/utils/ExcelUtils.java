@@ -26,7 +26,7 @@ public abstract class ExcelUtils {
         Row row = sheet.getRow(0);
         if (row == null) row = sheet.createRow(0);
 
-        row.createCell(0).setCellValue("Длина пути");
+        row.createCell(0).setCellValue("Количество красных");
         row.createCell(1).setCellValue("Ширина пути");
         row.createCell(2).setCellValue("Количество кластеров всего");
         row.createCell(3).setCellValue("Время");
