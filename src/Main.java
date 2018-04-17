@@ -37,22 +37,23 @@ public class Main {
 //        startNewThread(Tests.getGradMatrix50x50(false));
 //        startNewThread(Tests.getRainMatrix50x50());
 //        new MainForm();
-        processIterations();
+//        processIterations();
+        newProcessIterations();
     }
 
     public static void processIterations() {
         currIter = 0;
         while (currIter != Setup.MAX_ITERATION) {
-            if (currThreads < Setup.MAX_THREADS) {
+            if (currThreads < Setup.MAX_THREADS * 2) {
                 currIter++;
                 startNewThread(Setup.M, Setup.N, Setup.P, currIter);
-            } else {
-                try {
-                    Thread.sleep(500L);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
+        }
+    }
+
+    public static void newProcessIterations() {
+        for (int i = 0; i < Setup.MAX_THREADS; i++) {
+            startNewThread(Setup.M, Setup.N, Setup.P, i, Setup.MAX_THREADS, Setup.MAX_ITERATION);
         }
     }
 
@@ -76,7 +77,7 @@ public class Main {
 
     public static void startNewThread(int m, int n, double p, int currIter) {
         String fileName = "m-" + m + "n-" + n + "p-" + p + ".xls";
-        new Thread(new Runnable() {
+        final Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 currThreads++;
@@ -87,7 +88,26 @@ public class Main {
                 ExcelUtils.writeTableToFile(fileName, table, currIter, time);
                 currThreads--;
             }
-        }).start();
+        });
+        thread.start();
+    }
+
+    public static void startNewThread(int m, int n, double p, int threadNumber, int threads, int itterations) {
+        String fileName = "m-" + m + "n-" + n + "p-" + p + ".xls";
+        final Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < itterations/threads; i++) {
+                    long time = System.currentTimeMillis();
+                    Table table = new Table(m, n, p);
+                    time = System.currentTimeMillis() - time;
+                    int currIter = i + threadNumber*(itterations/threads);
+                    System.out.println("Текущая выполненная операция = " + currIter);
+                    ExcelUtils.writeTableToFile(fileName, table, currIter, time);
+                }
+            }
+        });
+        thread.start();
     }
 
     public static void startNewThread(LinkedList<LinkedList<Point>> points) {

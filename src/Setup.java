@@ -5,12 +5,12 @@ public class Setup {
      * чтобы могли пользоваться компом, но если он вам не нужен на какое - то время,
      * то можете ставить сколько у вас есть
      */
-    public static final int MAX_THREADS = 4;
+    public static final int MAX_THREADS = 8;
 
     /**
      * количество повторений (сколько записей будет в xml файле)
      */
-    public static final int MAX_ITERATION = 20;
+    public static final int MAX_ITERATION = 50;
 
     /**
      * ширина матрицы
