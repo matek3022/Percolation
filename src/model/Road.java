@@ -25,6 +25,7 @@ public class Road {
      */
     private int roadLength;
 
+
     public Road(Cluster first, Cluster second) {
         this.first = first;
         this.second = second;
@@ -100,5 +101,13 @@ public class Road {
         res = neededStepHorizontal + neededStepVertical - 1;
         if (res < 0) res = 0;
         return res;
+    }
+
+    public Point getIdealFirstPoint() {
+        return idealFirstPoint;
+    }
+
+    public Point getIdealSecondPoint() {
+        return idealSecondPoint;
     }
 }

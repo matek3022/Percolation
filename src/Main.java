@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] argv) {
 //        startNewThread(75, 75, 0.1d);
 //        startNewThread(75, 75, 0.2d);
-//        startNewThread(75, 75, 0.3d);
+        startNewThread(10, 10, 0.3d);
 //        startNewThread(75, 75, 0.4d);
 //        startNewThread(75, 75, 0.5d);
 //        startNewThread(75, 75, 0.6d);
@@ -38,7 +38,7 @@ public class Main {
 //        startNewThread(Tests.getRainMatrix50x50());
 //        new MainForm();
 //        processIterations();
-        newProcessIterations();
+//        newProcessIterations();
     }
 
     public static void processIterations() {

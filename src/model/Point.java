@@ -35,6 +35,11 @@ public class Point {
      */
     private int clusterNumber = -1;
 
+    /**
+     * вес для деикстры
+     */
+    private int deikstraValue = Integer.MAX_VALUE;
+
     public Point(byte value, @Nonnull Pair<Integer, Integer> coord) {
         this.value = value;
         this.coord = coord;
@@ -98,5 +103,13 @@ public class Point {
 
     public void setClusterNumber(int clusterNumber) {
         this.clusterNumber = clusterNumber;
+    }
+
+    public int getDeikstraValue() {
+        return deikstraValue;
+    }
+
+    public void setDeikstraValue(int deikstraValue) {
+        this.deikstraValue = deikstraValue;
     }
 }

@@ -5,27 +5,27 @@ public class Setup {
      * чтобы могли пользоваться компом, но если он вам не нужен на какое - то время,
      * то можете ставить сколько у вас есть
      */
-    public static final int MAX_THREADS = 8;
+    public static final int MAX_THREADS = 4;
 
     /**
      * количество повторений (сколько записей будет в xml файле)
      */
-    public static final int MAX_ITERATION = 50;
+    public static final int MAX_ITERATION = 100;
 
     /**
      * ширина матрицы
      */
-    public static final int N = 50;
+    public static final int N = 150;
 
     /**
      * высота матрицы
      */
-    public static final int M = 50;
+    public static final int M = 150;
 
     /**
      * вероятность появления черных точек
      */
-    public static final double P = 0.5;
+    public static final double P = 0.95;
 
 
     /**
