@@ -182,7 +182,7 @@ public class Cluster {
 
     private void processColorAndDeikstraRoad(Point idealSecondPoint) {
         deikstraPoints = new LinkedList<>();
-        int currDeikstraValue = idealSecondPoint.getDeikstraValue();
+        int currDeikstraValue = idealSecondPoint.getDeikstraValue() - 1;
         Point currDeikstraPoint = idealSecondPoint;
         deikstraPoints.add(currDeikstraPoint);
         for (int i = 0; i < idealSecondPoint.getDeikstraValue(); i++) {
@@ -275,6 +275,15 @@ public class Cluster {
 
     public LinkedList<Point> getDeikstraPoints() {
         return deikstraPoints;
+    }
+
+    public int getRoadSize() {
+        int res = 0;
+        for (Point iter : deikstraPoints) {
+            if (iter.getValue() == Point.BLACK_POINT)
+                res++;
+        }
+        return res;
     }
 
     public void setDeikstraPoints(LinkedList<Point> deikstraPoints) {

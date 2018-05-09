@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] argv) {
 //        startNewThread(75, 75, 0.1d);
 //        startNewThread(75, 75, 0.2d);
-        startNewThread(10, 10, 0.3d);
+        startNewThread(50, 50, 0.05d);
 //        startNewThread(75, 75, 0.4d);
 //        startNewThread(75, 75, 0.5d);
 //        startNewThread(75, 75, 0.6d);
@@ -66,7 +66,8 @@ public class Main {
                 time = System.currentTimeMillis() - time;
                 System.out.println();
                 System.out.println("Cluster count: " + table.getClusterCount());
-                System.out.println("Table minLength: " + table.getMinLength());
+                System.out.println("Table red count: " + table.getRedCount());
+                System.out.println("Table road length: " + table.getRoadLength());
                 System.out.println("Table road width: " + table.getRoadWidth());
                 System.out.println("Time: " + time);
                 System.out.println(String.format("Params: m = %s, n = %s, p = %s", m, n, p));
@@ -118,7 +119,7 @@ public class Main {
                 Table table = new Table(points);
                 System.out.println();
                 System.out.println("Cluster count: " + table.getClusterCount());
-                System.out.println("Table minLength: " + table.getMinLength());
+                System.out.println("Table minLength: " + table.getRedCount());
                 System.out.println("Table road width: " + table.getRoadWidth());
                 System.out.println("Time: " + (System.currentTimeMillis() - time));
                 System.out.println(String.format("Params: m = %s, n = %s, p = %s", table.getM(), table.getN(), table.getP()));

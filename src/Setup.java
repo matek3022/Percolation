@@ -10,22 +10,22 @@ public class Setup {
     /**
      * количество повторений (сколько записей будет в xml файле)
      */
-    public static final int MAX_ITERATION = 100;
+    public static final int MAX_ITERATION = 1000;
 
     /**
      * ширина матрицы
      */
-    public static final int N = 150;
+    public static final int N = 50;
 
     /**
      * высота матрицы
      */
-    public static final int M = 150;
+    public static final int M = 50;
 
     /**
      * вероятность появления черных точек
      */
-    public static final double P = 0.95;
+    public static final double P = 0.05;
 
 
     /**

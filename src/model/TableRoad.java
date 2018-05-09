@@ -15,6 +15,11 @@ public class TableRoad {
      */
     private int roadWidth;
 
+    /**
+     * количество красных
+     */
+    private int redCount;
+
     public TableRoad(Cluster endCluster, int roadLength) {
         this.endCluster = endCluster;
         this.roadLength = roadLength;
@@ -57,9 +62,9 @@ public class TableRoad {
              * сюда проваливаемся в случае, когда кластер полностью идет сверху вниз (один)
              */
             if (endCluster != null)
-            for (Point point : endCluster.getPoints()) {
-                processColor(point);
-            }
+                for (Point point : endCluster.getPoints()) {
+                    processColor(point);
+                }
             if (startCluster != null)
                 for (Point point : startCluster.getPoints()) {
                     processColor(point);
@@ -68,24 +73,24 @@ public class TableRoad {
     }
 
     private void processRoadsInCluster(Table table) {
-        if (startCluster.isTopAndBottomCluster()) {
+        if (endCluster == startCluster) {
+            endCluster.processDeikstraIntoTopAndBottomCluster(table);
+        } else if (endCluster.isTopAndBottomCluster()) {
+            endCluster.processDeikstraIntoTopAndBottomCluster(table);
+        } else if (startCluster.isTopAndBottomCluster()) {
             startCluster.processDeikstraIntoTopAndBottomCluster(table);
-        }
-        for (int i = 0; i < roads.size(); i++) {
-            if (roads.get(i).getFirst().isTopAndBottomCluster()) {
-                roads.get(i).getFirst().processDeikstraIntoTopAndBottomCluster(table);
-            } else if (roads.get(i).getFirst().isTopCluster()) {
-                roads.get(i).getFirst().processDeikstraIntoTopCluster(roads.get(i).getIdealFirstPoint());
-            }
-            if (roads.get(i).getSecond().isBottomCluster()) {
-                roads.get(i).getSecond().processDeikstraIntoBottomCluster(roads.get(i).getIdealSecondPoint(), table);
-            }
-            if (i + 1 < roads.size()) {
-                if (!roads.get(i).getSecond().isTopCluster() &&
-                        !roads.get(i).getSecond().isBottomCluster()) {
-                    roads.get(i).getSecond().processDeikstraIntoRoad(
-                            roads.get(i).getIdealSecondPoint(),
-                            roads.get(i + 1).getIdealFirstPoint(),
+        } else {
+            for (int i = roads.size() - 1; i >= 0; i--) {
+                Road iter = roads.get(i);
+                if (iter.getFirst().isTopCluster()) {
+                    iter.getFirst().processDeikstraIntoTopCluster(iter.getIdealFirstPoint());
+                } else {
+                    if (iter.getSecond().isBottomCluster()) {
+                        iter.getSecond().processDeikstraIntoBottomCluster(iter.getIdealSecondPoint(), table);
+                    }
+                    iter.getFirst().processDeikstraIntoRoad(
+                            roads.get(i + 1).getIdealSecondPoint(),
+                            iter.getIdealFirstPoint(),
                             true
                     );
                 }
@@ -108,11 +113,11 @@ public class TableRoad {
         int right = 0;
         if (roads != null) {
             for (Road road : roads) {
-                for (Point point : road.getFirst().getPoints()) {
+                for (Point point : road.getFirst().getDeikstraPoints()) {
                     if (point.getCoordX() < left) left = point.getCoordX();
                     if (point.getCoordX() > right) right = point.getCoordX();
                 }
-                for (Point point : road.getSecond().getPoints()) {
+                for (Point point : road.getSecond().getDeikstraPoints()) {
                     if (point.getCoordX() < left) left = point.getCoordX();
                     if (point.getCoordX() > right) right = point.getCoordX();
                 }
@@ -134,6 +139,19 @@ public class TableRoad {
                 }
         }
         roadWidth = right - left + 1;
+        roadLength = 0;
+        redCount = 0;
+        for (LinkedList<Point> row : table.getPoints()) {
+            for (Point point : row) {
+                if (point.getValue() == Point.RED_POINT) {
+                    roadLength++;
+                    redCount++;
+                }
+                if (point.getValue() == Point.GREEN_POINT) {
+                    roadLength++;
+                }
+            }
+        }
     }
 
     public LinkedList<Road> getRoads() {
@@ -146,6 +164,10 @@ public class TableRoad {
 
     public Cluster getStartCluster() {
         return startCluster;
+    }
+
+    public int getRedCount() {
+        return redCount;
     }
 
     public int getRoadLength() {

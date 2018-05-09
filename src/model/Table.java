@@ -445,8 +445,15 @@ public class Table {
         return p;
     }
 
-    public int getMinLength() {
-        return minTableRoad.getRoadLength();
+    public LinkedList<LinkedList<Point>> getPoints() {
+        return points;
+    }
+
+    /**
+     * @return количество красных (добавленных)
+     */
+    public int getRedCount() {
+        return minTableRoad.getRedCount();
     }
 
     /**
@@ -454,5 +461,12 @@ public class Table {
      */
     public int getRoadWidth() {
         return minTableRoad.getRoadWidth();
+    }
+
+    /**
+     * @return длинну пути
+     */
+    public int getRoadLength() {
+        return minTableRoad.getRoadLength();
     }
 }

@@ -28,29 +28,32 @@ public abstract class ExcelUtils {
 
         row.createCell(0).setCellValue("Количество красных");
         row.createCell(1).setCellValue("Ширина пути");
-        row.createCell(2).setCellValue("Количество кластеров всего");
-        row.createCell(3).setCellValue("Время");
+        row.createCell(2).setCellValue("Длина пути");
+        row.createCell(3).setCellValue("Количество кластеров всего");
+        row.createCell(4).setCellValue("Время");
 
-        row.createCell(5).setCellValue("Ширина = " + table.getN());
-        row.createCell(6).setCellValue("Высота = " + table.getM());
-        row.createCell(7).setCellValue("Вероятность = " + table.getP());
+        row.createCell(6).setCellValue("Ширина = " + table.getN());
+        row.createCell(7).setCellValue("Высота = " + table.getM());
+        row.createCell(8).setCellValue("Вероятность = " + table.getP());
 
         // Меняем размер столбца
         sheet.autoSizeColumn(0);
         sheet.autoSizeColumn(1);
         sheet.autoSizeColumn(2);
         sheet.autoSizeColumn(3);
+        sheet.autoSizeColumn(4);
 
-        sheet.autoSizeColumn(5);
         sheet.autoSizeColumn(6);
         sheet.autoSizeColumn(7);
+        sheet.autoSizeColumn(8);
 
         Row tableRow = sheet.getRow(currIter);
         if (tableRow == null) tableRow = sheet.createRow(currIter);
-        tableRow.createCell(0).setCellValue(table.getMinLength());
+        tableRow.createCell(0).setCellValue(table.getRedCount());
         tableRow.createCell(1).setCellValue(table.getRoadWidth());
-        tableRow.createCell(2).setCellValue(table.getClusterCount());
-        tableRow.createCell(3).setCellValue(time);
+        tableRow.createCell(2).setCellValue(table.getRoadLength());
+        tableRow.createCell(3).setCellValue(table.getClusterCount());
+        tableRow.createCell(4).setCellValue(time);
 
         // Записываем всё в файл
         try {
