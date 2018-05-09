@@ -84,6 +84,9 @@ public class TableRoad {
                 Road iter = roads.get(i);
                 if (iter.getFirst().isTopCluster()) {
                     iter.getFirst().processDeikstraIntoTopCluster(iter.getIdealFirstPoint());
+                    if (iter.getSecond().isBottomCluster()) {
+                        iter.getSecond().processDeikstraIntoBottomCluster(iter.getIdealSecondPoint(), table);
+                    }
                 } else {
                     if (iter.getSecond().isBottomCluster()) {
                         iter.getSecond().processDeikstraIntoBottomCluster(iter.getIdealSecondPoint(), table);
