@@ -25,7 +25,7 @@ public class Setup {
     /**
      * вероятность появления черных точек
      */
-    public static final double P = 0.3;
+    public static final double P = 0.7;
 
 
     /**

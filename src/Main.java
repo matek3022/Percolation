@@ -2,7 +2,7 @@ import model.Point;
 import model.Table;
 import utils.ExcelUtils;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 
 public class Main {
@@ -111,7 +111,7 @@ public class Main {
         thread.start();
     }
 
-    public static void startNewThread(LinkedList<LinkedList<Point>> points) {
+    public static void startNewThread(ArrayList<ArrayList<Point>> points) {
         new Thread(new Runnable() {
             @Override
             public void run() {

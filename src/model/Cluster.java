@@ -1,23 +1,23 @@
 package model;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class Cluster {
     /**
      * точки кластера
      */
-    private LinkedList<Point> points;
+    private ArrayList<Point> points;
 
 
     /**
      * список точек для дейкстры
      */
-    private LinkedList<Point> deikstraPoints;
+    private ArrayList<Point> deikstraPoints;
 
     /**
      * кратчайшие пути до других кластеров
      */
-    private LinkedList<Road> roads;
+    private ArrayList<Road> roads;
     /**
      * этот кластер есть в первой строке
      */
@@ -41,13 +41,13 @@ public class Cluster {
      */
     private Cluster currPrevCluster = this;
 
-    public Cluster(Table table, LinkedList<Point> points) {
+    public Cluster(Table table, ArrayList<Point> points) {
         this.points = points;
         processTopAndBottom(table);
     }
 
     public Cluster(Table table, Point point) {
-        this.points = new LinkedList<>();
+        this.points = new ArrayList<>();
         points.add(point);
         processTopAndBottom(table);
     }
@@ -69,7 +69,7 @@ public class Cluster {
      * @param cluster
      */
     public void addRoadToCluster(Cluster cluster) {
-        if (roads == null) roads = new LinkedList<>();
+        if (roads == null) roads = new ArrayList<>();
         if (this != cluster) {
             roads.add(new Road(this, cluster));
         }
@@ -79,7 +79,7 @@ public class Cluster {
      * Добавляем пути из this кластера до всех кластеров списка
      * @param clusters
      */
-    public void addRoadsToClusters(LinkedList<Cluster> clusters) {
+    public void addRoadsToClusters(ArrayList<Cluster> clusters) {
         for (Cluster iterator : clusters) {
             addRoadToCluster(iterator);
         }
@@ -119,26 +119,31 @@ public class Cluster {
 
     public void processDeikstraIntoTopAndBottomCluster(Table table) {
         Point currIdealFirstPoint = null;
+        Point currIdealSecondPoint = null;
         int currMin = Integer.MAX_VALUE;
         for (Point iter : points) {
             if (iter.getCoordY() == 1) {
                 processDeikstraIntoRoad(iter, null, false);
                 int currCurrMin = Integer.MAX_VALUE;
+                Point currCurrIdealSecondPoint = null;
                 for (Point it : points) {
                     if (it.getCoordY() == table.getM() && it.getDeikstraValue() < currCurrMin) {
                         currCurrMin = it.getDeikstraValue();
+                        currCurrIdealSecondPoint = it;
                     }
                 }
                 if (currCurrMin < currMin) {
                     currMin = currCurrMin;
                     currIdealFirstPoint = iter;
+                    currIdealSecondPoint = currCurrIdealSecondPoint;
                 }
                 for (Point iterr : points) {
                     iterr.setDeikstraValue(Integer.MAX_VALUE);
                 }
             }
         }
-        processDeikstraIntoBottomCluster(currIdealFirstPoint, table);
+//        processDeikstraIntoBottomCluster(currIdealFirstPoint, table);
+        processDeikstraIntoRoad(currIdealFirstPoint, currIdealSecondPoint, true);
     }
 
     public void processDeikstraIntoRoad(Point idealFirstPoint, Point idealSecondPoint, boolean withColor) {
@@ -181,7 +186,7 @@ public class Cluster {
     }
 
     private void processColorAndDeikstraRoad(Point idealSecondPoint) {
-        deikstraPoints = new LinkedList<>();
+        deikstraPoints = new ArrayList<>();
         int currDeikstraValue = idealSecondPoint.getDeikstraValue() - 1;
         Point currDeikstraPoint = idealSecondPoint;
         deikstraPoints.add(currDeikstraPoint);
@@ -233,15 +238,15 @@ public class Cluster {
         return res;
     }
 
-    public LinkedList<Point> getPoints() {
+    public ArrayList<Point> getPoints() {
         return points;
     }
 
-    public void setPoints(LinkedList<Point> points) {
+    public void setPoints(ArrayList<Point> points) {
         this.points = points;
     }
 
-    public LinkedList<Road> getRoads() {
+    public ArrayList<Road> getRoads() {
         return roads;
     }
 
@@ -273,7 +278,7 @@ public class Cluster {
         this.currPrevCluster = currPrevCluster;
     }
 
-    public LinkedList<Point> getDeikstraPoints() {
+    public ArrayList<Point> getDeikstraPoints() {
         return deikstraPoints;
     }
 
@@ -286,7 +291,7 @@ public class Cluster {
         return res;
     }
 
-    public void setDeikstraPoints(LinkedList<Point> deikstraPoints) {
+    public void setDeikstraPoints(ArrayList<Point> deikstraPoints) {
         this.deikstraPoints = deikstraPoints;
     }
 }

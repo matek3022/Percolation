@@ -1,7 +1,7 @@
 package model;
 
 import javax.annotation.Nonnull;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -38,22 +38,22 @@ public class Table {
     /**
      * матрица точек
      */
-    private LinkedList<LinkedList<Point>> points;
+    private ArrayList<ArrayList<Point>> points;
 
     /**
      * массив кластеров таблицы
      */
-    private LinkedList<Cluster> clusters;
+    private ArrayList<Cluster> clusters;
 
     /**
      * массив точек последней строки, не включенные в кластеры
      */
-    private LinkedList<Point> nonClusterPoints;
+    private ArrayList<Point> nonClusterPoints;
 
     /**
      * белые кластеры из точек последней строки для алгоритма дейкстры
      */
-    private LinkedList<Cluster> whiteClusters;
+    private ArrayList<Cluster> whiteClusters;
 
     /**
      * кратчайший путь
@@ -74,7 +74,7 @@ public class Table {
         init(true);
     }
 
-    public Table (LinkedList<LinkedList<Point>> points) {
+    public Table (ArrayList<ArrayList<Point>> points) {
         p = 0;
         m = points.size() - 2;
         n = points.get(0).size() - 2;
@@ -83,9 +83,9 @@ public class Table {
     }
 
     private void init(boolean generate) {
-        clusters = new LinkedList<>();
-        nonClusterPoints = new LinkedList<>();
-        whiteClusters = new LinkedList<>();
+        clusters = new ArrayList<>();
+        nonClusterPoints = new ArrayList<>();
+        whiteClusters = new ArrayList<>();
         if (generate) generateTable();
         processClusters();
         processRoads();
@@ -131,8 +131,8 @@ public class Table {
     }
 
     private void generateTable() {
-        points = new LinkedList<>();
-        points.add(new LinkedList<>());
+        points = new ArrayList<>();
+        points.add(new ArrayList<>());
         /**
          * добавляем белую строку в начале
          */
@@ -143,7 +143,7 @@ public class Table {
          * бежим по строкам
          */
         for (int i = 1; i < m + 1; i++) {
-            points.add(new LinkedList<Point>());
+            points.add(new ArrayList<Point>());
             /**
              * добавляем белую точку в начале строки
              */
@@ -162,7 +162,7 @@ public class Table {
         /**
          * добавляем белую строку в конце
          */
-        points.add(new LinkedList<Point>());
+        points.add(new ArrayList<Point>());
         for (int i = 0; i < m + 2; i++) {
             points.get(points.size() - 1).add(getWhitePoint(i, points.size() - 1));
         }
@@ -195,7 +195,7 @@ public class Table {
     private TableRoad processStartRoadFromPoint(int x, int y) {
         boolean startPointIsBlack = false;
         boolean endPointIsBlack = false;
-        LinkedList<Cluster> temp = new LinkedList<>();
+        ArrayList<Cluster> temp = new ArrayList<>();
         temp.addAll(clusters);
         temp.addAll(whiteClusters);
         /**
@@ -300,7 +300,7 @@ public class Table {
                         /**
                          * запоминаем кластер
                          */
-                        if (clusters == null) clusters = new LinkedList<>();
+                        if (clusters == null) clusters = new ArrayList<>();
                         clusters.add(new Cluster(this, getPoint(x, y).getClusterFriends()));
                     }
                 }
@@ -310,7 +310,7 @@ public class Table {
         /**
          * ищем все точки последней строки, которые не вошли в кластеры
          */
-        nonClusterPoints = new LinkedList<>();
+        nonClusterPoints = new ArrayList<>();
         for (int i = 1; i < n + 1; i++) {
             if (points.get(m).get(i).getValue() == WHITE_POINT) {
                 nonClusterPoints.add(points.get(m).get(i));
@@ -320,7 +320,7 @@ public class Table {
         /**
          * создаем кластеры для белых точек, не вошедших в кластеры (т.к. они белые :))
          */
-        whiteClusters = new LinkedList<>();
+        whiteClusters = new ArrayList<>();
         for (Point point : nonClusterPoints) {
             whiteClusters.add(new Cluster(this, point));
         }
@@ -353,10 +353,10 @@ public class Table {
      * @return список всех элементов в кластере с точкой с координатами (Х, У)
      */
     @Nonnull
-    private LinkedList<Point> currClusterProcess(LinkedList<Point> checkList, int x, int y) {
+    private ArrayList<Point> currClusterProcess(ArrayList<Point> checkList, int x, int y) {
 
-        if (checkList == null) checkList = new LinkedList<>();
-        LinkedList<Point> res = new LinkedList<>();
+        if (checkList == null) checkList = new ArrayList<>();
+        ArrayList<Point> res = new ArrayList<>();
 
         if (isNewPointInCluster(checkList, getPoint(x, y))) {
             res.add(getPoint(x, y));
@@ -397,14 +397,14 @@ public class Table {
          * чтобы запустить процедуру на них, за исключением
          * текущей точки (т.к. мы уже её обработали)
          */
-        LinkedList<Point> currRes = new LinkedList<>();
+        ArrayList<Point> currRes = new ArrayList<>();
         currRes.addAll(res);
         currRes.remove(getPoint(x, y));
         for (Point curr : currRes) {
             /**
              * запускаем алгоритм на все точки, прилегающие к текущей
              */
-            LinkedList<Point> newPoints = currClusterProcess(checkList, curr.getCoordX(), curr.getCoordY());
+            ArrayList<Point> newPoints = currClusterProcess(checkList, curr.getCoordX(), curr.getCoordY());
 
             /**
              * точка выхода из итеративного алгоритма, дописываем в результирующий список
@@ -425,7 +425,7 @@ public class Table {
      * @param point точка, которую планируется внести в список
      * @return true если точки нет в списке, если присутствует то false
      */
-    private boolean isNewPointInCluster(LinkedList<Point> cluster, Point point) {
+    private boolean isNewPointInCluster(ArrayList<Point> cluster, Point point) {
         if (cluster == null) return true;
         for (Point curr : cluster) {
             if (curr == point) return false;
@@ -445,7 +445,7 @@ public class Table {
         return p;
     }
 
-    public LinkedList<LinkedList<Point>> getPoints() {
+    public ArrayList<ArrayList<Point>> getPoints() {
         return points;
     }
 

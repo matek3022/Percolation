@@ -4,7 +4,7 @@ import javafx.util.Pair;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class Point {
     public static final byte GREEN_POINT = 3;
@@ -28,7 +28,7 @@ public class Point {
     /**
      * точки в общем кластере
      */
-    private LinkedList<Point> clusterFriends;
+    private ArrayList<Point> clusterFriends;
 
     /**
      * номер кластера
@@ -52,24 +52,24 @@ public class Point {
 
     public void addClusterFriend(@Nonnull Point friend) {
         if (clusterFriends == null) {
-            clusterFriends = new LinkedList<>();
+            clusterFriends = new ArrayList<>();
         }
         clusterFriends.add(friend);
     }
 
     @Nullable
-    public LinkedList<Point> getClusterFriends() {
+    public ArrayList<Point> getClusterFriends() {
         return clusterFriends;
     }
 
-    public void addClusterFriend(LinkedList<Point> clusterFriends) {
+    public void addClusterFriend(ArrayList<Point> clusterFriends) {
         if (this.clusterFriends == null) {
-            this.clusterFriends = new LinkedList<>();
+            this.clusterFriends = new ArrayList<>();
         }
         this.clusterFriends.addAll(clusterFriends);
     }
 
-    public void setClusterFriends(LinkedList<Point> clusterFriends) {
+    public void setClusterFriends(ArrayList<Point> clusterFriends) {
         this.clusterFriends = clusterFriends;
     }
 

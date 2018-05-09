@@ -1,6 +1,6 @@
 package model;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 /**
  * объект дорога, который характеризует связь между собой 2 кластера таблицы
@@ -18,7 +18,7 @@ public class Road {
     /**
      * список точек пути
      */
-    private LinkedList<Point> listPoints;
+    private ArrayList<Point> listPoints;
 
     /**
      * кратчайшая длина пути между кластерами (напрямик)
@@ -32,7 +32,7 @@ public class Road {
         processRoad();
     }
 
-    public LinkedList<Point> getListPoints() {
+    public ArrayList<Point> getListPoints() {
         return listPoints;
     }
 
@@ -54,7 +54,7 @@ public class Road {
     public void processRoadPoints(Table table) {
         int x = idealFirstPoint.getCoordX() - idealSecondPoint.getCoordX();
         int y = idealFirstPoint.getCoordY() - idealSecondPoint.getCoordY();
-        listPoints = new LinkedList<>();
+        listPoints = new ArrayList<>();
         for (int i = 0; i != x; ) {
             if (x > 0) {
                 i++;
@@ -77,8 +77,8 @@ public class Road {
      * вычисляем наименьшую длину пути между кластерами
      */
     private void processRoad() {
-        idealFirstPoint = first.getPoints().getFirst();
-        idealSecondPoint = second.getPoints().getFirst();
+        idealFirstPoint = first.getPoints().get(0);
+        idealSecondPoint = second.getPoints().get(0);
         int currLength = Integer.MAX_VALUE;
         for (Point firstIterator : first.getPoints()) {
             for (Point secondIterator : second.getPoints()) {

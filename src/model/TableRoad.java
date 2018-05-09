@@ -1,11 +1,11 @@
 package model;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class TableRoad {
     private Cluster startCluster;
     private Cluster endCluster;
-    private LinkedList<Road> roads;
+    private ArrayList<Road> roads;
     /**
      * длина пути
      */
@@ -48,11 +48,11 @@ public class TableRoad {
             /**
              * для окрашивания конечного кластера
              */
-            for (Point point : roads.getFirst().getSecond().getPoints()) {
+            for (Point point : roads.get(0).getSecond().getPoints()) {
                 processColor(point);
-                roads.getFirst().processRoadPoints(table);
-                if (roads.getFirst().getListPoints() != null) {
-                    for (Point roadPoint : roads.getFirst().getListPoints()) {
+                roads.get(0).processRoadPoints(table);
+                if (roads.get(0).getListPoints() != null) {
+                    for (Point roadPoint : roads.get(0).getListPoints()) {
                         processColor(roadPoint);
                     }
                 }
@@ -102,7 +102,7 @@ public class TableRoad {
     }
 
     public void processRoads() {
-        roads = new LinkedList<>();
+        roads = new ArrayList<>();
         Cluster iterationCluster = endCluster;
         while (iterationCluster != startCluster) {
             roads.add(new Road(iterationCluster.getCurrPrevCluster(), iterationCluster));
@@ -144,7 +144,7 @@ public class TableRoad {
         roadWidth = right - left + 1;
         roadLength = 0;
         redCount = 0;
-        for (LinkedList<Point> row : table.getPoints()) {
+        for (ArrayList<Point> row : table.getPoints()) {
             for (Point point : row) {
                 if (point.getValue() == Point.RED_POINT) {
                     roadLength++;
@@ -157,7 +157,7 @@ public class TableRoad {
         }
     }
 
-    public LinkedList<Road> getRoads() {
+    public ArrayList<Road> getRoads() {
         return roads;
     }
 
