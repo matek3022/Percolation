@@ -76,7 +76,7 @@ public class Table {
         init(true);
     }
 
-    public Table (ArrayList<ArrayList<Point>> points) {
+    public Table(ArrayList<ArrayList<Point>> points) {
         p = 0;
         m = points.size() - 2;
         n = points.get(0).size() - 2;
@@ -101,7 +101,7 @@ public class Table {
         }
     }
 
-    public void printTable(boolean withClusterSize) {
+    public void printTable(boolean withClusterNumber) {
         for (List<Point> row : points) {
             for (Point point : row) {
                 String text = "";
@@ -110,13 +110,13 @@ public class Table {
                         text = ANSI_WHITE + TEXTURE;
                         break;
                     case BLACK_POINT:
-                        text = ANSI_BLACK + (withClusterSize ? getNormalizeClusterSize(point.getClusterSize()) : TEXTURE);
+                        text = ANSI_BLACK + (withClusterNumber ? getNormalizeClusterNumber(point) : TEXTURE);
                         break;
                     case RED_POINT:
-                        text = ANSI_RED + TEXTURE;
+                        text = (Setup.SHOW_WITH_ROAD ? ANSI_RED : ANSI_WHITE) + TEXTURE;
                         break;
                     case GREEN_POINT:
-                        text = ANSI_GREEN + (withClusterSize ? getNormalizeClusterSize(point.getClusterSize()) : TEXTURE);
+                        text = (Setup.SHOW_WITH_ROAD ? ANSI_GREEN : ANSI_BLACK) + (withClusterNumber ? getNormalizeClusterNumber(point) : TEXTURE);
                         break;
                 }
                 System.out.print(text);
@@ -132,6 +132,12 @@ public class Table {
     private String getNormalizeClusterSize(int clusterSize) {
         if (clusterSize / 10 > 0) return String.valueOf(clusterSize);
         return String.valueOf(clusterSize) + " ";
+    }
+
+    private String getNormalizeClusterNumber(Point point) {
+        if (point.getClusterNumber() / 100 > 0) return "XX";
+        if (point.getClusterNumber() / 10 > 0) return String.valueOf(point.getClusterNumber());
+        return String.valueOf(point.getClusterNumber()) + " ";
     }
 
     public Point getPoint(int x, int y) {
@@ -356,8 +362,8 @@ public class Table {
      * проверямая точка была {@link Point#BLACK_POINT}
      *
      * @param checkList список точек, уже учтеных при просчете кластера
-     * @param x координата текущей точки по оси Х
-     * @param y координата текущей точки по оси У
+     * @param x         координата текущей точки по оси Х
+     * @param y         координата текущей точки по оси У
      * @return список всех элементов в кластере с точкой с координатами (Х, У)
      */
     @Nonnull
@@ -429,8 +435,9 @@ public class Table {
 
     /**
      * процедура для проверки вхождения точки в список
+     *
      * @param cluster список подлежащий проверке
-     * @param point точка, которую планируется внести в список
+     * @param point   точка, которую планируется внести в список
      * @return true если точки нет в списке, если присутствует то false
      */
     private boolean isNewPointInCluster(ArrayList<Point> cluster, Point point) {
@@ -486,6 +493,6 @@ public class Table {
         for (Cluster cluster : clusters) {
             res += cluster.getPoints().size();
         }
-        return res/clusters.size();
+        return res / clusters.size();
     }
 }
