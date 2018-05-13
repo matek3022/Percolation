@@ -9,11 +9,11 @@ public class Main {
 
     public static void main(String[] argv) {
         if (findHelp(argv) == 1) return;
-        if (findThreads(argv) == 1) return;
         if (findM(argv) == 1) return;
         if (findN(argv) == 1) return;
         if (findP(argv) == 1) return;
         if (findIterations(argv) == 1) return;
+        if (findThreads(argv) == 1) return;
         if (findMoreParams(argv) == 1) return;
         if (findClusterNumeric(argv) == 1) return;
         if (findShow(argv) == 1) return;
@@ -37,10 +37,10 @@ public class Main {
                 System.out.println("-h помощь");
                 System.out.println("-tr количество потоков (целое число), по умолчанию 1");
                 System.out.println("-te тесты, возможные варианты: grad_vertical, grad_horizontal, rain, chess, square, x_black, x_white, x_small_white, h_matrix, snake, перекрывает собой n, m, p и i");
-                System.out.println("-n количество столбцов генерируемой таблицы (целое число)");
-                System.out.println("-m количество строк генерируемой таблицы (целое число)");
-                System.out.println("-p вероятность появления черных в генерируемой таблице (дробное число)");
-                System.out.println("-i количество итераций для записи в excel файл (целое число)");
+                System.out.println("-n количество столбцов генерируемой таблицы (целое число) по умолчанию 50");
+                System.out.println("-m количество строк генерируемой таблицы (целое число) по умолчанию 50");
+                System.out.println("-p вероятность появления черных в генерируемой таблице (дробное число) по умолчанию 0.5");
+                System.out.println("-i количество итераций для записи в excel файл (целое число) по умолчанию 10");
                 System.out.println("-wlwarc с вычислением числа красных, длины и ширины пути (true или false) отключение этого параметра позволяет ускорить работу программы, по умолчанию false");
                 System.out.println("-wcn отрисовка таблицы с нумерацией кластеров (true или false), по умолчанию false");
                 System.out.println("-show рисовать таблицу или нет (true или false) перекрывает собой количество итераций, по умолчанию true");
@@ -56,9 +56,10 @@ public class Main {
             if (argv[i].equals("-tr")) {
                 try {
                     Setup.MAX_THREADS = Integer.valueOf(argv[i + 1]);
-                    if (Setup.MAX_THREADS < 0) throw new Exception();
+                    if (Setup.MAX_THREADS < 1 || Setup.MAX_THREADS > Setup.MAX_ITERATION) throw new Exception();
                     return 0;
                 } catch (Exception e) {
+                    if (Setup.MAX_THREADS > Setup.MAX_ITERATION) System.out.println("Количество потоков не может быть больше числа итераций");
                     System.out.println("Ошибка параметра -tr");
                     return 1;
                 }

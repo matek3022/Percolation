@@ -7,12 +7,12 @@ public class Setup {
      * чтобы могли пользоваться компом, но если он вам не нужен на какое - то время,
      * то можете ставить сколько у вас есть
      */
-    public static int MAX_THREADS = 4;
+    public static int MAX_THREADS = 1;
 
     /**
      * количество повторений (сколько записей будет в xml файле)
      */
-    public static int MAX_ITERATION = 1000;
+    public static int MAX_ITERATION = 10;
 
     /**
      * ширина матрицы
@@ -27,17 +27,17 @@ public class Setup {
     /**
      * вероятность появления черных точек
      */
-    public static double P = 0.25;
+    public static double P = 0.5;
 
     /**
      * с данными о ширине и длине пути
      */
-    public static boolean WITH_LENGTH_WIDTH_AND_RED_COUNT = true;
+    public static boolean WITH_LENGTH_WIDTH_AND_RED_COUNT = false;
 
     /**
      * с индексами кластеров для SHOW_DISPLAY = true
      */
-    public static boolean WITH_CLUSTER_NUMBER = true;
+    public static boolean WITH_CLUSTER_NUMBER = false;
 
     /**
      * показывать таблицу или нет, только один раз
@@ -47,7 +47,7 @@ public class Setup {
     /**
      * показывать таблицу с дорогой или нет для SHOW_DISPLAY = true
      */
-    public static boolean SHOW_WITH_ROAD = true;
+    public static boolean SHOW_WITH_ROAD = false;
 
     /**
      * p.s. выходные файлы будут лежать в папке проекта, называться будет так:

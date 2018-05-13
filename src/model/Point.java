@@ -1,7 +1,5 @@
 package model;
 
-import javafx.util.Pair;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -23,7 +21,8 @@ public class Point {
     /**
      * координаты в матрице
      */
-    private Pair<Integer, Integer> coord;
+    private int x;
+    private int y;
 
     /**
      * точки в общем кластере
@@ -40,14 +39,10 @@ public class Point {
      */
     private int deikstraValue = Integer.MAX_VALUE;
 
-    public Point(byte value, @Nonnull Pair<Integer, Integer> coord) {
-        this.value = value;
-        this.coord = coord;
-    }
-
     public Point(byte value, int coordX, int coordY) {
         this.value = value;
-        this.coord = new Pair<>(coordX, coordY);
+        x = coordX;
+        y = coordY;
     }
 
     public void addClusterFriend(@Nonnull Point friend) {
@@ -81,16 +76,12 @@ public class Point {
         return value;
     }
 
-    public Pair<Integer, Integer> getCoord() {
-        return coord;
-    }
-
     public int getCoordX() {
-        return coord.getKey();
+        return x;
     }
 
     public int getCoordY() {
-        return coord.getValue();
+        return y;
     }
 
     public int getClusterNumber() {
