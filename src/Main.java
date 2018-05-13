@@ -1,6 +1,7 @@
 import model.Point;
 import model.Table;
 import utils.ExcelUtils;
+import utils.Setup;
 
 import java.util.ArrayList;
 
@@ -66,6 +67,7 @@ public class Main {
                 time = System.currentTimeMillis() - time;
                 System.out.println();
                 System.out.println("Cluster count: " + table.getClusterCount());
+                System.out.println("Cluster middle size: " + table.getClusterMiddleSize());
                 System.out.println("Table red count: " + table.getRedCount());
                 System.out.println("Table road length: " + table.getRoadLength());
                 System.out.println("Table road width: " + table.getRoadWidth());

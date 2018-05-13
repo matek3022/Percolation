@@ -1,5 +1,7 @@
 package model;
 
+import utils.Setup;
+
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +92,13 @@ public class Table {
         processClusters();
         processRoads();
         minTableRoad.setRedColor(this);
-        minTableRoad.processRoadParams(this);
+        if (Setup.WITH_LENGTH_WIDTH_AND_RED_COUNT) {
+            minTableRoad.processRoadParams(this);
+        } else {
+            minTableRoad.setRedCount(0);
+            minTableRoad.setRoadLength(0);
+            minTableRoad.setRoadWidth(0);
+        }
     }
 
     public void printTable(boolean withClusterSize) {
@@ -468,5 +476,16 @@ public class Table {
      */
     public int getRoadLength() {
         return minTableRoad.getRoadLength();
+    }
+
+    /**
+     * @return средний размер кластера
+     */
+    public float getClusterMiddleSize() {
+        float res = 0f;
+        for (Cluster cluster : clusters) {
+            res += cluster.getPoints().size();
+        }
+        return res/clusters.size();
     }
 }

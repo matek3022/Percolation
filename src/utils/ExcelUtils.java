@@ -30,11 +30,12 @@ public abstract class ExcelUtils {
         row.createCell(1).setCellValue("Ширина пути");
         row.createCell(2).setCellValue("Длина пути");
         row.createCell(3).setCellValue("Количество кластеров всего");
-        row.createCell(4).setCellValue("Время");
+        row.createCell(4).setCellValue("Средний размер кластера");
+        row.createCell(5).setCellValue("Время");
 
-        row.createCell(6).setCellValue("Ширина = " + table.getN());
-        row.createCell(7).setCellValue("Высота = " + table.getM());
-        row.createCell(8).setCellValue("Вероятность = " + table.getP());
+        row.createCell(7).setCellValue("Ширина = " + table.getN());
+        row.createCell(8).setCellValue("Высота = " + table.getM());
+        row.createCell(9).setCellValue("Вероятность = " + table.getP());
 
         // Меняем размер столбца
         sheet.autoSizeColumn(0);
@@ -42,10 +43,11 @@ public abstract class ExcelUtils {
         sheet.autoSizeColumn(2);
         sheet.autoSizeColumn(3);
         sheet.autoSizeColumn(4);
+        sheet.autoSizeColumn(5);
 
-        sheet.autoSizeColumn(6);
         sheet.autoSizeColumn(7);
         sheet.autoSizeColumn(8);
+        sheet.autoSizeColumn(9);
 
         Row tableRow = sheet.getRow(currIter);
         if (tableRow == null) tableRow = sheet.createRow(currIter);
@@ -53,7 +55,8 @@ public abstract class ExcelUtils {
         tableRow.createCell(1).setCellValue(table.getRoadWidth());
         tableRow.createCell(2).setCellValue(table.getRoadLength());
         tableRow.createCell(3).setCellValue(table.getClusterCount());
-        tableRow.createCell(4).setCellValue(time);
+        tableRow.createCell(4).setCellValue(table.getClusterMiddleSize());
+        tableRow.createCell(5).setCellValue(time);
 
         // Записываем всё в файл
         try {

@@ -173,6 +173,18 @@ public class TableRoad {
         return redCount;
     }
 
+    public void setRedCount(int redCount) {
+        this.redCount = redCount;
+    }
+
+    public void setRoadLength(int roadLength) {
+        this.roadLength = roadLength;
+    }
+
+    public void setRoadWidth(int roadWidth) {
+        this.roadWidth = roadWidth;
+    }
+
     public int getRoadLength() {
         return roadLength;
     }

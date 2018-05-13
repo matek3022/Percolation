@@ -1,3 +1,5 @@
+package utils;
+
 public class Setup {
     /**
      * максимальное количество потоков доступное для программы
@@ -5,7 +7,7 @@ public class Setup {
      * чтобы могли пользоваться компом, но если он вам не нужен на какое - то время,
      * то можете ставить сколько у вас есть
      */
-    public static final int MAX_THREADS = 8;
+    public static final int MAX_THREADS = 4;
 
     /**
      * количество повторений (сколько записей будет в xml файле)
@@ -25,8 +27,12 @@ public class Setup {
     /**
      * вероятность появления черных точек
      */
-    public static final double P = 0.7;
+    public static final double P = 0.95;
 
+    /**
+     * с данными о ширине и длине пути
+     */
+    public static final boolean WITH_LENGTH_WIDTH_AND_RED_COUNT = false;
 
     /**
      * p.s. выходные файлы будут лежать в папке проекта, называться будет так:
