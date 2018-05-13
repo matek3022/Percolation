@@ -156,11 +156,11 @@ public abstract class Tests {
      * вложенные квадратики
      * @return
      */
-    public static LinkedList<LinkedList<Point>> getSquareMatrix50x50() {
+    public static ArrayList<ArrayList<Point>> getSquareMatrix50x50() {
         int m = 50;
         int n = 50;
-        LinkedList<LinkedList<Point>> res = new LinkedList<>();
-        res.add(new LinkedList<>());
+        ArrayList<ArrayList<Point>> res = new ArrayList<>();
+        res.add(new ArrayList<>());
         /**
          * добавляем белую строку в начале
          */
@@ -171,7 +171,7 @@ public abstract class Tests {
          * бежим по строкам
          */
         for (int i = 1; i < m + 1; i++) {
-            res.add(new LinkedList<Point>());
+            res.add(new ArrayList<Point>());
             /**
              * добавляем белую точку в начале строки
              */
@@ -217,18 +217,18 @@ public abstract class Tests {
         /**
          * добавляем белую строку в конце
          */
-        res.add(new LinkedList<Point>());
+        res.add(new ArrayList<Point>());
         for (int i = 0; i < m + 2; i++) {
             res.get(res.size() - 1).add(Table.getWhitePoint(i, res.size() - 1));
         }
         return res;
     }
 
-    public static LinkedList<LinkedList<Point>> getXBlackMatrix50x50() {
+    public static ArrayList<ArrayList<Point>> getXBlackMatrix50x50() {
         int m = 50;
         int n = 50;
-        LinkedList<LinkedList<Point>> res = new LinkedList<>();
-        res.add(new LinkedList<>());
+        ArrayList<ArrayList<Point>> res = new ArrayList<>();
+        res.add(new ArrayList<>());
         /**
          * добавляем белую строку в начале
          */
@@ -239,7 +239,7 @@ public abstract class Tests {
          * бежим по строкам
          */
         for (int i = 1; i < m + 1; i++) {
-            res.add(new LinkedList<Point>());
+            res.add(new ArrayList<Point>());
             /**
              * добавляем белую точку в начале строки
              */
@@ -263,18 +263,18 @@ public abstract class Tests {
         /**
          * добавляем белую строку в конце
          */
-        res.add(new LinkedList<Point>());
+        res.add(new ArrayList<Point>());
         for (int i = 0; i < m + 2; i++) {
             res.get(res.size() - 1).add(Table.getWhitePoint(i, res.size() - 1));
         }
         return res;
     }
 
-    public static LinkedList<LinkedList<Point>> getXWhiteMatrix50x50() {
+    public static ArrayList<ArrayList<Point>> getXWhiteMatrix50x50() {
         int m = 50;
         int n = 50;
-        LinkedList<LinkedList<Point>> res = new LinkedList<>();
-        res.add(new LinkedList<>());
+        ArrayList<ArrayList<Point>> res = new ArrayList<>();
+        res.add(new ArrayList<>());
         /**
          * добавляем белую строку в начале
          */
@@ -285,7 +285,7 @@ public abstract class Tests {
          * бежим по строкам
          */
         for (int i = 1; i < m + 1; i++) {
-            res.add(new LinkedList<Point>());
+            res.add(new ArrayList<Point>());
             /**
              * добавляем белую точку в начале строки
              */
@@ -309,18 +309,18 @@ public abstract class Tests {
         /**
          * добавляем белую строку в конце
          */
-        res.add(new LinkedList<Point>());
+        res.add(new ArrayList<Point>());
         for (int i = 0; i < m + 2; i++) {
             res.get(res.size() - 1).add(Table.getWhitePoint(i, res.size() - 1));
         }
         return res;
     }
 
-    public static LinkedList<LinkedList<Point>> getXSmallWhiteMatrix50x50() {
+    public static ArrayList<ArrayList<Point>> getXSmallWhiteMatrix50x50() {
         int m = 50;
         int n = 50;
-        LinkedList<LinkedList<Point>> res = new LinkedList<>();
-        res.add(new LinkedList<>());
+        ArrayList<ArrayList<Point>> res = new ArrayList<>();
+        res.add(new ArrayList<>());
         /**
          * добавляем белую строку в начале
          */
@@ -331,7 +331,7 @@ public abstract class Tests {
          * бежим по строкам
          */
         for (int i = 1; i < m + 1; i++) {
-            res.add(new LinkedList<Point>());
+            res.add(new ArrayList<Point>());
             /**
              * добавляем белую точку в начале строки
              */
@@ -355,18 +355,18 @@ public abstract class Tests {
         /**
          * добавляем белую строку в конце
          */
-        res.add(new LinkedList<Point>());
+        res.add(new ArrayList<Point>());
         for (int i = 0; i < m + 2; i++) {
             res.get(res.size() - 1).add(Table.getWhitePoint(i, res.size() - 1));
         }
         return res;
     }
 
-    public static LinkedList<LinkedList<Point>> getHMatrix50x50() {
+    public static ArrayList<ArrayList<Point>> getHMatrix50x50() {
         int m = 50;
         int n = 50;
-        LinkedList<LinkedList<Point>> res = new LinkedList<>();
-        res.add(new LinkedList<>());
+        ArrayList<ArrayList<Point>> res = new ArrayList<>();
+        res.add(new ArrayList<>());
         /**
          * добавляем белую строку в начале
          */
@@ -377,7 +377,7 @@ public abstract class Tests {
          * бежим по строкам
          */
         for (int i = 1; i < m + 1; i++) {
-            res.add(new LinkedList<Point>());
+            res.add(new ArrayList<Point>());
             /**
              * добавляем белую точку в начале строки
              */
@@ -404,18 +404,18 @@ public abstract class Tests {
         /**
          * добавляем белую строку в конце
          */
-        res.add(new LinkedList<Point>());
+        res.add(new ArrayList<Point>());
         for (int i = 0; i < m + 2; i++) {
             res.get(res.size() - 1).add(Table.getWhitePoint(i, res.size() - 1));
         }
         return res;
     }
 
-    public static LinkedList<LinkedList<Point>> getSnakeMatrix50x50() {
+    public static ArrayList<ArrayList<Point>> getSnakeMatrix50x50() {
         int m = 50;
         int n = 50;
-        LinkedList<LinkedList<Point>> res = new LinkedList<>();
-        res.add(new LinkedList<>());
+        ArrayList<ArrayList<Point>> res = new ArrayList<>();
+        res.add(new ArrayList<>());
         /**
          * добавляем белую строку в начале
          */
@@ -426,7 +426,7 @@ public abstract class Tests {
          * бежим по строкам
          */
         for (int i = 1; i < m + 1; i++) {
-            res.add(new LinkedList<Point>());
+            res.add(new ArrayList<Point>());
             /**
              * добавляем белую точку в начале строки
              */
@@ -450,7 +450,7 @@ public abstract class Tests {
         /**
          * добавляем белую строку в конце
          */
-        res.add(new LinkedList<Point>());
+        res.add(new ArrayList<Point>());
         for (int i = 0; i < m + 2; i++) {
             res.get(res.size() - 1).add(Table.getWhitePoint(i, res.size() - 1));
         }
