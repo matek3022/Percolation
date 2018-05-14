@@ -31,11 +31,13 @@ public abstract class ExcelUtils {
         row.createCell(2).setCellValue("Длина пути");
         row.createCell(3).setCellValue("Количество кластеров всего");
         row.createCell(4).setCellValue("Средний размер кластера");
-        row.createCell(5).setCellValue("Время");
+        row.createCell(5).setCellValue("Средния длина пути между кластерами");
+        row.createCell(6).setCellValue("Количество путей между кластерами");
+        row.createCell(7).setCellValue("Время");
 
-        row.createCell(7).setCellValue("Ширина = " + table.getN());
-        row.createCell(8).setCellValue("Высота = " + table.getM());
-        row.createCell(9).setCellValue("Вероятность = " + table.getP());
+        row.createCell(9).setCellValue("Ширина = " + table.getN());
+        row.createCell(10).setCellValue("Высота = " + table.getM());
+        row.createCell(11).setCellValue("Вероятность = " + table.getP());
 
         // Меняем размер столбца
         sheet.autoSizeColumn(0);
@@ -44,10 +46,12 @@ public abstract class ExcelUtils {
         sheet.autoSizeColumn(3);
         sheet.autoSizeColumn(4);
         sheet.autoSizeColumn(5);
-
+        sheet.autoSizeColumn(6);
         sheet.autoSizeColumn(7);
-        sheet.autoSizeColumn(8);
+
         sheet.autoSizeColumn(9);
+        sheet.autoSizeColumn(10);
+        sheet.autoSizeColumn(11);
 
         Row tableRow = sheet.getRow(currIter);
         if (tableRow == null) tableRow = sheet.createRow(currIter);
@@ -56,7 +60,9 @@ public abstract class ExcelUtils {
         tableRow.createCell(2).setCellValue(table.getRoadLength());
         tableRow.createCell(3).setCellValue(table.getClusterCount());
         tableRow.createCell(4).setCellValue(table.getClusterMiddleSize());
-        tableRow.createCell(5).setCellValue(time);
+        tableRow.createCell(5).setCellValue(table.getMiddleRoadLenght());
+        tableRow.createCell(6).setCellValue(table.getRoadCount());
+        tableRow.createCell(7).setCellValue(time);
 
         // Записываем всё в файл
         try {

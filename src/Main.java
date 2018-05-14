@@ -258,6 +258,8 @@ public class Main {
                 System.out.println("Table red count: " + table.getRedCount());
                 System.out.println("Table road length: " + table.getRoadLength());
                 System.out.println("Table road width: " + table.getRoadWidth());
+                System.out.println("Table red road count: " + table.getRoadCount());
+                System.out.println("Table red road middle length: " + table.getMiddleRoadLenght());
                 System.out.println("Time: " + time);
                 if (test == null) System.out.println(String.format("Params: m = %s, n = %s, p = %s", m, n, p));
                 else System.out.println("Type is " + test.getDescription());

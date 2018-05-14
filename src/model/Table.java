@@ -495,4 +495,19 @@ public class Table {
         }
         return res / clusters.size();
     }
+
+    /**
+     * @return средняя длина дороги между кластерами в пути
+     */
+    public float getMiddleRoadLenght() {
+        return minTableRoad.getMiddleRoadLenght();
+    }
+
+    /**
+     * @return количество дорог в пути
+     */
+    public float getRoadCount() {
+        return minTableRoad.getRoadCount();
+    }
+
 }
