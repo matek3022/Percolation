@@ -195,14 +195,18 @@ public class TableRoad {
 
     public float getMiddleRoadLenght() {
         float res = 0f;
-        for (Road road : roads) {
-            res += road.getRoadLength();
-        }
-        return res/roads.size();
+        if (roads != null) {
+            for (Road road : roads) {
+                res += road.getRoadLength();
+            }
+            return res / roads.size();
+        } else return res;
     }
 
     public int getRoadCount() {
-        return roads.size();
+        if (roads != null)
+            return roads.size();
+        else return 0;
     }
 
     private void processColor(Point point) {
