@@ -4,6 +4,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 
+/**
+ * класс точка, описывающий точку с координатами х и у и её свойства
+ */
 public class Point {
     public static final byte GREEN_POINT = 3;
     public static final byte RED_POINT = 2;

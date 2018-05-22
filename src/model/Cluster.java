@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * класс кластера таблицы
+ */
 public class Cluster {
     /**
      * точки кластера
@@ -85,6 +88,11 @@ public class Cluster {
         }
     }
 
+    /**
+     * просчитывает кратчайший путь в кластере (до конечной точки), имея конечную точку выхода из этого кластера
+     * кластер находится прилепленным к верхушке таблицы
+     * @param idealSecondPoint
+     */
     public void processDeikstraIntoTopCluster(Point idealSecondPoint) {
         processDeikstraIntoRoad(idealSecondPoint, null, false);
         int currMin = Integer.MAX_VALUE;
@@ -101,6 +109,12 @@ public class Cluster {
         processDeikstraIntoRoad(currIdealFirstPoint, idealSecondPoint, true);
     }
 
+    /**
+     * просчитывает кратчайший путь в кластере (до конечной точки), имея начальную точку входа в этот кластер
+     * кластер находится прилепленным к низу таблицы
+     * @param idealFirstPoint
+     * @param table
+     */
     public void processDeikstraIntoBottomCluster(Point idealFirstPoint, Table table) {
         processDeikstraIntoRoad(idealFirstPoint, null, false);
         int currMin = Integer.MAX_VALUE;
@@ -117,6 +131,11 @@ public class Cluster {
         processDeikstraIntoRoad(idealFirstPoint, currIdealSecondPoint, true);
     }
 
+    /**
+     * просчитывает кратчайший путь в кластере
+     * если кластер имеет в себе полный путь по таблице
+     * @param table
+     */
     public void processDeikstraIntoTopAndBottomCluster(Table table) {
         Point currIdealFirstPoint = null;
         Point currIdealSecondPoint = null;
@@ -146,6 +165,13 @@ public class Cluster {
         processDeikstraIntoRoad(currIdealFirstPoint, currIdealSecondPoint, true);
     }
 
+    /**
+     * просчитывает кратчайший путь в кластере
+     * имея входную и выходную точки
+     * @param idealFirstPoint
+     * @param idealSecondPoint
+     * @param withColor
+     */
     public void processDeikstraIntoRoad(Point idealFirstPoint, Point idealSecondPoint, boolean withColor) {
         idealFirstPoint.setDeikstraValue(1);
         processDeikstra(idealFirstPoint);
@@ -154,6 +180,10 @@ public class Cluster {
         }
     }
 
+    /**
+     * рекурсивная функция прохода дейкстры по прилягающим точкам
+     * @param point
+     */
     private void processDeikstra(Point point) {
         Point left = getPoint(point.getCoordX() - 1, point.getCoordY());
         Point right = getPoint(point.getCoordX() + 1, point.getCoordY());
@@ -185,6 +215,10 @@ public class Cluster {
         }
     }
 
+    /**
+     * окрашивание точек в соответствующие цвета, попутно занося точки пути в массив точек (путь)
+     * @param idealSecondPoint
+     */
     private void processColorAndDeikstraRoad(Point idealSecondPoint) {
         deikstraPoints = new ArrayList<>();
         int currDeikstraValue = idealSecondPoint.getDeikstraValue() - 1;
@@ -228,6 +262,12 @@ public class Cluster {
         }
     }
 
+    /**
+     * возрвращает точку по её координатам из массива точек кластера
+     * @param x
+     * @param y
+     * @return
+     */
     private Point getPoint(int x, int y) {
         Point res = null;
         for (int i = 0; i < points.size(); i++) {

@@ -9,6 +9,9 @@ import java.util.Random;
 
 import static model.Point.*;
 
+/**
+ * класс таблица
+ */
 public class Table {
     public static final double DEFAULT_P = 0.4d;
     public static final int DEFAULT_N = 75;
@@ -101,6 +104,12 @@ public class Table {
         }
     }
 
+    /**
+     * печать таблицы в консоль с окрашиваниями в соответствующие цвета,
+     * принимает параметр - флаг, говорящий о том нужно ли выводить индекс кластера
+     * для соответствующей точки
+     * @param withClusterNumber
+     */
     public void printTable(boolean withClusterNumber) {
         for (List<Point> row : points) {
             for (Point point : row) {
@@ -125,25 +134,38 @@ public class Table {
         }
     }
 
+    /**
+     *
+     * @return количество кластеров
+     */
     public int getClusterCount() {
         return clusterCount;
     }
 
-    private String getNormalizeClusterSize(int clusterSize) {
-        if (clusterSize / 10 > 0) return String.valueOf(clusterSize);
-        return String.valueOf(clusterSize) + " ";
-    }
-
+    /**
+     *
+     * @param point
+     * @return строку для вставки в консоль для нормальной отрисовки (чтобы не ехала картинка и все выглядело целостно)
+     */
     private String getNormalizeClusterNumber(Point point) {
         if (point.getClusterNumber() / 100 > 0) return "XX";
         if (point.getClusterNumber() / 10 > 0) return String.valueOf(point.getClusterNumber());
         return String.valueOf(point.getClusterNumber()) + " ";
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @return возвращает точку из таблицы по её координатам
+     */
     public Point getPoint(int x, int y) {
         return points.get(y).get(x);
     }
 
+    /**
+     * генерируем таблицу исходя из вероятности появления черной
+     */
     private void generateTable() {
         points = new ArrayList<>();
         points.add(new ArrayList<>());
@@ -182,20 +204,38 @@ public class Table {
         }
     }
 
+    /**
+     * @param x
+     * @param y
+     * @return возвращает черную или белую точку, в зависимости от вероятности с соотв. координатами
+     */
     private Point getPointForGenerateTable(int x, int y) {
         return new Point((new Random().nextInt(1000) <= p * 1000)
                 ? Point.BLACK_POINT : WHITE_POINT,
                 x, y);
     }
 
+    /**
+     * @param x
+     * @param y
+     * @return возвращает черную точку с соотв. координатами
+     */
     public static Point getBlackPoint(int x, int y) {
         return new Point(Point.BLACK_POINT, x, y);
     }
 
+    /**
+     * @param x
+     * @param y
+     * @return возвращает белую точку с соотв. координатами
+     */
     public static Point getWhitePoint(int x, int y) {
         return new Point(WHITE_POINT, x, y);
     }
 
+    /**
+     * функция запуска процесса просчета дорог между кластерами
+     */
     private void processRoads() {
         for (int i = 1; i < n + 1; i++) {
             Point currPoint = getPoint(i, 1);
@@ -206,6 +246,11 @@ public class Table {
         }
     }
 
+    /**
+     * @param x
+     * @param y
+     * @return считаем путь в таблице из точки с соответствующими координатами
+     */
     private TableRoad processStartRoadFromPoint(int x, int y) {
         boolean startPointIsBlack = false;
         boolean endPointIsBlack = false;
@@ -274,6 +319,10 @@ public class Table {
         return resTableRoad;
     }
 
+    /**
+     * рекурсивное построений путей между кластерами с записями в них растояний
+     * @param cluster
+     */
     private void processRoads(Cluster cluster) {
         if (cluster.isBottomCluster()) return;
         /**
@@ -289,7 +338,7 @@ public class Table {
     }
 
     /**
-     * просчет кластеров всей губки
+     * просчет кластеров всей губки (считаем все кластеры в таблице)
      */
     private void processClusters() {
         for (int y = 1; y < m + 1; y++) {

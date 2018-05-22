@@ -8,6 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="com.google.code.findbugs:annotations:3.0.1u2" level="project" />
-    <orderEntry type="library" name="org.apache.poi:poi:3.9" level="project" />
+    <orderEntry type="library" name="org.apache.poi:poi:3.17" level="project" />
   </component>
 </module>

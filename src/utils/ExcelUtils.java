@@ -9,8 +9,17 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * вспомогательный класс для синхронной записи в файл excel файл из разных потоков
+ */
 public abstract class ExcelUtils {
 
+    /**
+     * @param fileName имя выходного файла
+     * @param table записываемая таблица
+     * @param currIter итерация для таблицы
+     * @param time время просчета таблицы
+     */
     public static synchronized void writeTableToFile(String fileName, Table table, int currIter, long time) {
         HSSFWorkbook book;
         try {
@@ -71,8 +80,4 @@ public abstract class ExcelUtils {
             e.printStackTrace();
         }
     }
-
-//    public static synchronized Table readFromFile(String fileName) {
-//
-//    }
 }

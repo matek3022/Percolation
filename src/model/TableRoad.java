@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * класс дорога таблицы (по начальному и конечному кластеру)
+ */
 public class TableRoad {
     private Cluster startCluster;
     private Cluster endCluster;
@@ -29,6 +32,10 @@ public class TableRoad {
         startCluster = cluster;
     }
 
+    /**
+     * окрашивание точек таблицы в красный цвет
+     * @param table
+     */
     public void setRedColor(Table table) {
         if (roads != null) {
             /**
@@ -72,6 +79,10 @@ public class TableRoad {
         }
     }
 
+    /**
+     * запуск процесса нахождения кратчайших путей внутри кластеров, учавствующих в пути
+     * @param table
+     */
     private void processRoadsInCluster(Table table) {
         if (endCluster == startCluster) {
             endCluster.processDeikstraIntoTopAndBottomCluster(table);
@@ -101,6 +112,9 @@ public class TableRoad {
         }
     }
 
+    /**
+     * восстановление дорог между кластерами, принадлежащими пути
+     */
     public void processRoads() {
         roads = new ArrayList<>();
         Cluster iterationCluster = endCluster;
@@ -110,6 +124,10 @@ public class TableRoad {
         }
     }
 
+    /**
+     * процесс просчета параметров пути в таблице (длина и ширина пути, количество красных)
+     * @param table
+     */
     public void processRoadParams(Table table) {
         processRoadsInCluster(table);
         int left = Integer.MAX_VALUE;
