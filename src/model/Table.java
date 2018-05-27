@@ -11,6 +11,7 @@ import static model.Point.*;
 
 /**
  * класс таблица
+ * создал {@link utils.Person#SEMENOV}
  */
 public class Table {
     public static final double DEFAULT_P = 0.4d;
@@ -109,6 +110,7 @@ public class Table {
      * принимает параметр - флаг, говорящий о том нужно ли выводить индекс кластера
      * для соответствующей точки
      * @param withClusterNumber
+     * создал {@link utils.Person#KRUGLOVA}
      */
     public void printTable(boolean withClusterNumber) {
         for (List<Point> row : points) {
@@ -137,6 +139,7 @@ public class Table {
     /**
      *
      * @return количество кластеров
+     * создал {@link utils.Person#SEMENOV}
      */
     public int getClusterCount() {
         return clusterCount;
@@ -146,6 +149,7 @@ public class Table {
      *
      * @param point
      * @return строку для вставки в консоль для нормальной отрисовки (чтобы не ехала картинка и все выглядело целостно)
+     * создал {@link utils.Person#KRUGLOVA}
      */
     private String getNormalizeClusterNumber(Point point) {
         if (point.getClusterNumber() / 100 > 0) return "XX";
@@ -158,6 +162,7 @@ public class Table {
      * @param x
      * @param y
      * @return возвращает точку из таблицы по её координатам
+     * создал {@link utils.Person#KRUGLOVA}
      */
     public Point getPoint(int x, int y) {
         return points.get(y).get(x);
@@ -165,6 +170,7 @@ public class Table {
 
     /**
      * генерируем таблицу исходя из вероятности появления черной
+     * создал {@link utils.Person#KOROLEV}
      */
     private void generateTable() {
         points = new ArrayList<>();
@@ -208,6 +214,7 @@ public class Table {
      * @param x
      * @param y
      * @return возвращает черную или белую точку, в зависимости от вероятности с соотв. координатами
+     * создал {@link utils.Person#KOROLEV}
      */
     private Point getPointForGenerateTable(int x, int y) {
         return new Point((new Random().nextInt(1000) <= p * 1000)
@@ -219,6 +226,7 @@ public class Table {
      * @param x
      * @param y
      * @return возвращает черную точку с соотв. координатами
+     * создал {@link utils.Person#KOROLEV}
      */
     public static Point getBlackPoint(int x, int y) {
         return new Point(Point.BLACK_POINT, x, y);
@@ -228,6 +236,7 @@ public class Table {
      * @param x
      * @param y
      * @return возвращает белую точку с соотв. координатами
+     * создал {@link utils.Person#KOROLEV}
      */
     public static Point getWhitePoint(int x, int y) {
         return new Point(WHITE_POINT, x, y);
@@ -235,6 +244,7 @@ public class Table {
 
     /**
      * функция запуска процесса просчета дорог между кластерами
+     * создал {@link utils.Person#SEMENOV}
      */
     private void processRoads() {
         for (int i = 1; i < n + 1; i++) {
@@ -250,6 +260,7 @@ public class Table {
      * @param x
      * @param y
      * @return считаем путь в таблице из точки с соответствующими координатами
+     * создал {@link utils.Person#SEMENOV}
      */
     private TableRoad processStartRoadFromPoint(int x, int y) {
         boolean startPointIsBlack = false;
@@ -322,6 +333,7 @@ public class Table {
     /**
      * рекурсивное построений путей между кластерами с записями в них растояний
      * @param cluster
+     * создал {@link utils.Person#SEMENOV}
      */
     private void processRoads(Cluster cluster) {
         if (cluster.isBottomCluster()) return;
@@ -339,6 +351,7 @@ public class Table {
 
     /**
      * просчет кластеров всей губки (считаем все кластеры в таблице)
+     * создал {@link utils.Person#KRUGLOVA}
      */
     private void processClusters() {
         for (int y = 1; y < m + 1; y++) {
@@ -414,6 +427,7 @@ public class Table {
      * @param x         координата текущей точки по оси Х
      * @param y         координата текущей точки по оси У
      * @return список всех элементов в кластере с точкой с координатами (Х, У)
+     * создал {@link utils.Person#KRUGLOVA}
      */
     @Nonnull
     private ArrayList<Point> currClusterProcess(ArrayList<Point> checkList, int x, int y) {
@@ -488,6 +502,7 @@ public class Table {
      * @param cluster список подлежащий проверке
      * @param point   точка, которую планируется внести в список
      * @return true если точки нет в списке, если присутствует то false
+     * создал {@link utils.Person#KRUGLOVA}
      */
     private boolean isNewPointInCluster(ArrayList<Point> cluster, Point point) {
         if (cluster == null) return true;
@@ -515,6 +530,7 @@ public class Table {
 
     /**
      * @return количество красных (добавленных)
+     * создал {@link utils.Person#KOROLEV}
      */
     public int getRedCount() {
         return minTableRoad.getRedCount();
@@ -522,6 +538,7 @@ public class Table {
 
     /**
      * @return ширину пути
+     * создал {@link utils.Person#KOROLEV}
      */
     public int getRoadWidth() {
         return minTableRoad.getRoadWidth();
@@ -529,6 +546,7 @@ public class Table {
 
     /**
      * @return длинну пути
+     * создал {@link utils.Person#KOROLEV}
      */
     public int getRoadLength() {
         return minTableRoad.getRoadLength();
@@ -536,6 +554,7 @@ public class Table {
 
     /**
      * @return средний размер кластера
+     * создал {@link utils.Person#KOROLEV}
      */
     public float getClusterMiddleSize() {
         float res = 0f;
@@ -547,6 +566,7 @@ public class Table {
 
     /**
      * @return средняя длина дороги между кластерами в пути
+     * создал {@link utils.Person#KOROLEV}
      */
     public float getMiddleRoadLenght() {
         return minTableRoad.getMiddleRoadLenght();
@@ -554,6 +574,7 @@ public class Table {
 
     /**
      * @return количество дорог в пути
+     * создал {@link utils.Person#KOROLEV}
      */
     public float getRoadCount() {
         return minTableRoad.getRoadCount();

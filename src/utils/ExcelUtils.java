@@ -11,6 +11,7 @@ import java.io.IOException;
 
 /**
  * вспомогательный класс для синхронной записи в файл excel файл из разных потоков
+ * создал {@link utils.Person#SEMENOV}
  */
 public abstract class ExcelUtils {
 
@@ -19,6 +20,7 @@ public abstract class ExcelUtils {
      * @param table записываемая таблица
      * @param currIter итерация для таблицы
      * @param time время просчета таблицы
+     * создал {@link utils.Person#SEMENOV}
      */
     public static synchronized void writeTableToFile(String fileName, Table table, int currIter, long time) {
         HSSFWorkbook book;

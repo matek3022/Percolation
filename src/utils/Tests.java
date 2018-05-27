@@ -6,6 +6,10 @@ import model.Table;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ *
+ *создал {@link utils.Person#SEMENOV}
+ */
 public abstract class Tests {
 
     /**
@@ -19,7 +23,7 @@ public abstract class Tests {
      * ████████████████████
      * если isVertical == true то вертикальные линии
      * 50x50 + белая окантовка
-     *
+     * создал {@link utils.Person#HODULIN}
      * @return
      */
     public static ArrayList<ArrayList<Point>> getGradMatrix50x50(boolean isVertical) {
@@ -65,7 +69,7 @@ public abstract class Tests {
 
     /**
      * дождь (прирывистые вертикальные линии)
-     *
+     * создал {@link utils.Person#KOROLEV}
      * @return
      */
     public static ArrayList<ArrayList<Point>> getRainMatrix50x50() {
@@ -111,7 +115,7 @@ public abstract class Tests {
 
     /**
      * шахматная доска
-     *
+     * создал {@link utils.Person#KOROLEV}
      * @return
      */
     public static ArrayList<ArrayList<Point>> getChessMatrix50x50() {
@@ -157,7 +161,7 @@ public abstract class Tests {
 
     /**
      * вложенные квадратики
-     *
+     * создал {@link utils.Person#KOROLEV}
      * @return
      */
     public static ArrayList<ArrayList<Point>> getSquareMatrix50x50() {
@@ -228,6 +232,10 @@ public abstract class Tests {
         return res;
     }
 
+    /**
+     * создал {@link utils.Person#ZOLOTUHIN}
+     * @return
+     */
     public static ArrayList<ArrayList<Point>> getXBlackMatrix50x50() {
         int m = 50;
         int n = 50;
@@ -274,6 +282,10 @@ public abstract class Tests {
         return res;
     }
 
+    /**
+     * создал {@link utils.Person#ZOLOTUHIN}
+     * @return
+     */
     public static ArrayList<ArrayList<Point>> getXWhiteMatrix50x50() {
         int m = 50;
         int n = 50;
@@ -320,6 +332,10 @@ public abstract class Tests {
         return res;
     }
 
+    /**
+     * создал {@link utils.Person#ZOLOTUHIN}
+     * @return
+     */
     public static ArrayList<ArrayList<Point>> getXSmallWhiteMatrix50x50() {
         int m = 50;
         int n = 50;
@@ -366,6 +382,10 @@ public abstract class Tests {
         return res;
     }
 
+    /**
+     * создал {@link utils.Person#HODULIN}
+     * @return
+     */
     public static ArrayList<ArrayList<Point>> getHMatrix50x50() {
         int m = 50;
         int n = 50;
@@ -414,7 +434,10 @@ public abstract class Tests {
         }
         return res;
     }
-
+    /**
+     * создал {@link utils.Person#KOROLEV}
+     * @return
+     */
     public static ArrayList<ArrayList<Point>> getSnakeMatrix50x50() {
         int m = 50;
         int n = 50;
@@ -461,6 +484,10 @@ public abstract class Tests {
         return res;
     }
 
+    /**
+     * создал {@link utils.Person#SEMENOV}
+     * @return
+     */
     public enum TestsEnum {
         GRAD_VERTICAL("grad_vertical", getGradMatrix50x50(true), "Вертикальные линии"),
         GRAD_HORIZONTAL("grad_horizontal", getGradMatrix50x50(false), "Горизонтальные линии"),

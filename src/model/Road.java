@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * объект дорога, который характеризует связь между собой 2 кластера таблицы
+ * создал {@link utils.Person#SEMENOV}
  */
 public class Road {
     /**
@@ -50,6 +51,7 @@ public class Road {
 
     /**
      * построение маршрута между точками кластера
+     * создал {@link utils.Person#KOROLEV}
      */
     public void processRoadPoints(Table table) {
         int x = idealFirstPoint.getCoordX() - idealSecondPoint.getCoordX();
@@ -75,6 +77,7 @@ public class Road {
 
     /**
      * вычисляем наименьшую длину пути между кластерами
+     * создал {@link utils.Person#KOROLEV}
      */
     private void processRoad() {
         idealFirstPoint = first.getPoints().get(0);
@@ -94,6 +97,12 @@ public class Road {
         // TODO: 20.03.2018 заполнить табличку путей из точек idealFirstPoint в idealSecondPoint
     }
 
+    /**
+     * @param first
+     * @param second
+     * @return длину между точками
+     * создал {@link utils.Person#KOROLEV}
+     */
     private int getLength(Point first, Point second) {
         int res;
         int neededStepVertical = Math.abs(second.getCoordY() - first.getCoordY());

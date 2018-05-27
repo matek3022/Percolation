@@ -32,6 +32,7 @@ public class Main {
      * поиск флага помощи в аргументах
      * @param argv
      * @return
+     * создал {@link utils.Person#SEMENOV}
      */
     private static int findHelp(String[] argv) {
         for (int i = 0; i < argv.length; i++) {
@@ -58,6 +59,7 @@ public class Main {
      * поиск флага количества потоков в аргументах
      * @param argv
      * @return
+     * создал {@link utils.Person#SEMENOV}
      */
     private static int findThreads(String[] argv) {
         for (int i = 0; i < argv.length; i++) {
@@ -80,6 +82,7 @@ public class Main {
      * поиск флага ширины таблицы в аргументах
      * @param argv
      * @return
+     * создал {@link utils.Person#SEMENOV}
      */
     private static int findN(String[] argv) {
         for (int i = 0; i < argv.length; i++) {
@@ -101,6 +104,7 @@ public class Main {
      * поиск флага высоты таблицы в аргументах
      * @param argv
      * @return
+     * создал {@link utils.Person#SEMENOV}
      */
     private static int findM(String[] argv) {
         for (int i = 0; i < argv.length; i++) {
@@ -122,6 +126,7 @@ public class Main {
      * поиск флага вероятности появления черных в аргументах
      * @param argv
      * @return
+     * создал {@link utils.Person#SEMENOV}
      */
     private static int findP(String[] argv) {
         for (int i = 0; i < argv.length; i++) {
@@ -143,6 +148,7 @@ public class Main {
      * поиск флага количества итераций в аргументах
      * @param argv
      * @return
+     * создал {@link utils.Person#SEMENOV}
      */
     private static int findIterations(String[] argv) {
         for (int i = 0; i < argv.length; i++) {
@@ -164,6 +170,7 @@ public class Main {
      * поиск флага бОльшего количества парамтеров в аргументах
      * @param argv
      * @return
+     * создал {@link utils.Person#SEMENOV}
      */
     private static int findMoreParams(String[] argv) {
         for (int i = 0; i < argv.length; i++) {
@@ -184,6 +191,7 @@ public class Main {
      * поиск флага индексирования точек кластера (номер кластера, в который входит точка) в аргументах
      * @param argv
      * @return
+     * создал {@link utils.Person#SEMENOV}
      */
     private static int findClusterNumeric(String[] argv) {
         for (int i = 0; i < argv.length; i++) {
@@ -204,6 +212,7 @@ public class Main {
      * поиск флага отображения матрицы в аргументах
      * @param argv
      * @return
+     * создал {@link utils.Person#SEMENOV}
      */
     private static int findShow(String[] argv) {
         for (int i = 0; i < argv.length; i++) {
@@ -224,6 +233,7 @@ public class Main {
      * поиск флага отображения пути в аргументах
      * @param argv
      * @return
+     * создал {@link utils.Person#SEMENOV}
      */
     private static int findShowWithRoad(String[] argv) {
         for (int i = 0; i < argv.length; i++) {
@@ -244,6 +254,7 @@ public class Main {
      * поиск флага тестов
      * @param argv
      * @return
+     * создал {@link utils.Person#SEMENOV}
      */
     private static int findTests(String[] argv) {
         for (int i = 0; i < argv.length; i++) {
@@ -284,6 +295,7 @@ public class Main {
 
     /**
      * процесс для итерационной работы программы (для сбора статистики)
+     * создал {@link utils.Person#SEMENOV}
      */
     public static void newProcessIterations() {
         for (int i = 0; i < Setup.MAX_THREADS; i++) {
@@ -296,6 +308,7 @@ public class Main {
      * @param m
      * @param n
      * @param p
+     * создал {@link utils.Person#SEMENOV}
      */
     public static void startNewThread(int m, int n, double p) {
         startNewThread(m, n, p, null);
@@ -304,6 +317,7 @@ public class Main {
     /**
      * старт потока для отображения тестовой таблицы
      * @param test
+     * создал {@link utils.Person#SEMENOV}
      */
     public static void startNewThread(Tests.TestsEnum test) {
         startNewThread(0, 0, 0, test);
@@ -315,6 +329,7 @@ public class Main {
      * @param n
      * @param p
      * @param test
+     * создал {@link utils.Person#SEMENOV}
      */
     public static void startNewThread(int m, int n, double p, Tests.TestsEnum test) {
         new Thread(new Runnable() {
@@ -349,6 +364,7 @@ public class Main {
      * @param threadNumber
      * @param threads
      * @param itterations
+     * создал {@link utils.Person#SEMENOV}
      */
     public static void startNewThread(int m, int n, double p, int threadNumber, int threads, int itterations) {
         String fileName = "m-" + m + "n-" + n + "p-" + p + ".xls";

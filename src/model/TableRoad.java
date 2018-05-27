@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * класс дорога таблицы (по начальному и конечному кластеру)
+ * создал {@link utils.Person#SEMENOV}
  */
 public class TableRoad {
     private Cluster startCluster;
@@ -127,6 +128,7 @@ public class TableRoad {
     /**
      * процесс просчета параметров пути в таблице (длина и ширина пути, количество красных)
      * @param table
+     * создал {@link utils.Person#KOROLEV}
      */
     public void processRoadParams(Table table) {
         processRoadsInCluster(table);

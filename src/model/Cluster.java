@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * класс кластера таблицы
+ * создал {@link utils.Person#SEMENOV}
  */
 public class Cluster {
     /**
@@ -55,6 +56,11 @@ public class Cluster {
         processTopAndBottom(table);
     }
 
+    /**
+     * просчет флага явления кластера касающимся верха таблицы низа таблицы или одновременно
+     * @param table
+     * создал {@link utils.Person#SEMENOV}
+     */
     private void processTopAndBottom(Table table) {
         for (Point iterator : points) {
             if (iterator.getCoordY() == 1) {
@@ -70,6 +76,7 @@ public class Cluster {
     /**
      * добавляем путь из this кластера до cluster, если он не текущий
      * @param cluster
+     * создал {@link utils.Person#SEMENOV}
      */
     public void addRoadToCluster(Cluster cluster) {
         if (roads == null) roads = new ArrayList<>();
@@ -81,6 +88,7 @@ public class Cluster {
     /**
      * Добавляем пути из this кластера до всех кластеров списка
      * @param clusters
+     * создал {@link utils.Person#SEMENOV}
      */
     public void addRoadsToClusters(ArrayList<Cluster> clusters) {
         for (Cluster iterator : clusters) {
@@ -92,6 +100,7 @@ public class Cluster {
      * просчитывает кратчайший путь в кластере (до конечной точки), имея конечную точку выхода из этого кластера
      * кластер находится прилепленным к верхушке таблицы
      * @param idealSecondPoint
+     * создал {@link utils.Person#SEMENOV}
      */
     public void processDeikstraIntoTopCluster(Point idealSecondPoint) {
         processDeikstraIntoRoad(idealSecondPoint, null, false);
@@ -114,6 +123,7 @@ public class Cluster {
      * кластер находится прилепленным к низу таблицы
      * @param idealFirstPoint
      * @param table
+     * создал {@link utils.Person#SEMENOV}
      */
     public void processDeikstraIntoBottomCluster(Point idealFirstPoint, Table table) {
         processDeikstraIntoRoad(idealFirstPoint, null, false);
@@ -135,6 +145,7 @@ public class Cluster {
      * просчитывает кратчайший путь в кластере
      * если кластер имеет в себе полный путь по таблице
      * @param table
+     * создал {@link utils.Person#SEMENOV}
      */
     public void processDeikstraIntoTopAndBottomCluster(Table table) {
         Point currIdealFirstPoint = null;
@@ -171,6 +182,7 @@ public class Cluster {
      * @param idealFirstPoint
      * @param idealSecondPoint
      * @param withColor
+     * создал {@link utils.Person#SEMENOV}
      */
     public void processDeikstraIntoRoad(Point idealFirstPoint, Point idealSecondPoint, boolean withColor) {
         idealFirstPoint.setDeikstraValue(1);
@@ -183,6 +195,7 @@ public class Cluster {
     /**
      * рекурсивная функция прохода дейкстры по прилягающим точкам
      * @param point
+     * создал {@link utils.Person#SEMENOV}
      */
     private void processDeikstra(Point point) {
         Point left = getPoint(point.getCoordX() - 1, point.getCoordY());
@@ -218,6 +231,7 @@ public class Cluster {
     /**
      * окрашивание точек в соответствующие цвета, попутно занося точки пути в массив точек (путь)
      * @param idealSecondPoint
+     * создал {@link utils.Person#SEMENOV}
      */
     private void processColorAndDeikstraRoad(Point idealSecondPoint) {
         deikstraPoints = new ArrayList<>();
@@ -267,6 +281,7 @@ public class Cluster {
      * @param x
      * @param y
      * @return
+     * создал {@link utils.Person#SEMENOV}
      */
     private Point getPoint(int x, int y) {
         Point res = null;

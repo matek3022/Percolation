@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 /**
  * класс точка, описывающий точку с координатами х и у и её свойства
+ * создал {@link utils.Person#SEMENOV}
  */
 public class Point {
     public static final byte GREEN_POINT = 3;
