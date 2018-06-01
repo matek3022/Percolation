@@ -15,14 +15,11 @@ import java.io.IOException;
  */
 public abstract class ExcelUtils {
 
-    /**
-     * @param fileName имя выходного файла
-     * @param table записываемая таблица
-     * @param currIter итерация для таблицы
-     * @param time время просчета таблицы
-     * создал {@link utils.Person#SEMENOV}
-     */
-    public static synchronized void writeTableToFile(String fileName, Table table, int currIter, long time) {
+    private static HSSFWorkbook book;
+    private static Sheet sheet;
+    private static int tableCount = 0;
+
+    private static synchronized void startInit(String fileName, Table table) {
         HSSFWorkbook book;
         try {
             book = new HSSFWorkbook(new FileInputStream(fileName));
@@ -63,9 +60,22 @@ public abstract class ExcelUtils {
         sheet.autoSizeColumn(9);
         sheet.autoSizeColumn(10);
         sheet.autoSizeColumn(11);
+        ExcelUtils.book = book;
+        ExcelUtils.sheet = sheet;
+    }
 
-        Row tableRow = sheet.getRow(currIter);
-        if (tableRow == null) tableRow = sheet.createRow(currIter);
+    /**
+     * @param fileName имя выходного файла
+     * @param table записываемая таблица
+     * @param currIter итерация для таблицы
+     * @param time время просчета таблицы
+     * создал {@link utils.Person#SEMENOV}
+     */
+    public static synchronized void writeTableToFile(String fileName, Table table, int currIter, long time) {
+        if (book == null) startInit(fileName, table);
+        tableCount++;
+        Row tableRow = sheet.getRow(currIter + 1);
+        if (tableRow == null) tableRow = sheet.createRow(currIter + 1);
         tableRow.createCell(0).setCellValue(table.getRedCount());
         tableRow.createCell(1).setCellValue(table.getRoadWidth());
         tableRow.createCell(2).setCellValue(table.getRoadLength());
@@ -75,11 +85,13 @@ public abstract class ExcelUtils {
         tableRow.createCell(6).setCellValue(table.getRoadCount());
         tableRow.createCell(7).setCellValue(time);
 
-        // Записываем всё в файл
-        try {
-            book.write(new FileOutputStream(fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (tableCount == (Setup.MAX_ITERATION / Setup.MAX_THREADS) * Setup.MAX_THREADS) {
+            // Записываем всё в файл
+            try {
+                book.write(new FileOutputStream(fileName));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
